@@ -191,6 +191,18 @@ body{
   border-bottom:1px solid #EAF5EA;font-size:13px;}
 .sz-item:last-child{border-bottom:none;}
 .sz-total{font-weight:800;color:#2D6A2D;padding-top:6px;text-align:right;font-size:13px;}
+#milestone-banner{
+  display:none;
+  background:linear-gradient(135deg,#FFD700,#FFA500);
+  color:#1A3A00;
+  text-align:center;
+  padding:14px 16px;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:.5px;
+  animation:mpulse 2s ease-in-out infinite;
+}
+@keyframes mpulse{0%,100%{opacity:1}50%{opacity:.82}}
 </style>
 </head>
 <body>
@@ -217,6 +229,8 @@ body{
     <button class="tab" onclick="sw('summary')">📊<br>集計</button>
   </div>
 </div>
+
+<div id="milestone-banner"></div>
 
 <!-- 産卵・給餌 -->
 <div id="pg-record" class="pg on">
@@ -424,6 +438,7 @@ function init() {
   var d = new Date();
   document.getElementById("today-label").textContent = d.getFullYear()+"年"+(d.getMonth()+1)+"月の日別産卵記録";
   loadWeather();
+  checkAndShowMilestoneBanner();
 }
 
 function buildSzRows() {
@@ -991,6 +1006,52 @@ function saveRecEdit(rowIndex, room) {
     loadToday();
   })
   .catch(function(e) { toast("❌ " + (e.message || "エラー"), "ng"); });
+}
+
+// ============================================================
+// マイルストーン達成バナー
+// ============================================================
+var MILESTONES = [6000, 7777, 10000];
+
+function checkAndShowMilestoneBanner() {
+  callGAS('getMonthlyDailyRecords')
+    .then(function(recs) {
+      var milestone = calcMilestone(recs);
+      var banner = document.getElementById('milestone-banner');
+      if (milestone) {
+        banner.textContent = '🥚 祝 ' + milestone.toLocaleString() + '個達成！ 🎉';
+        banner.style.display = 'block';
+      } else {
+        banner.style.display = 'none';
+      }
+    })
+    .catch(function(){});
+}
+
+function calcMilestone(recs) {
+  if (!recs || !recs.length) return null;
+  var sorted = recs.slice().sort(function(a, b) {
+    return a.dateStr < b.dateStr ? -1 : 1;
+  });
+  var running = 0;
+  var lastMilestone = null;
+  var lastMilestoneDate = null;
+  for (var i = 0; i < sorted.length; i++) {
+    var prev = running;
+    running += sorted[i].total || 0;
+    for (var j = 0; j < MILESTONES.length; j++) {
+      if (prev < MILESTONES[j] && running >= MILESTONES[j]) {
+        lastMilestone = MILESTONES[j];
+        lastMilestoneDate = sorted[i].dateStr;
+      }
+    }
+  }
+  if (!lastMilestone) return null;
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' +
+    String(today.getMonth()+1).padStart(2,'0') + '-' +
+    String(today.getDate()).padStart(2,'0');
+  return lastMilestoneDate === todayStr ? lastMilestone : null;
 }
 
 window.onload = init;
