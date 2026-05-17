@@ -11,95 +11,44 @@
 <meta name="apple-mobile-web-app-title" content="buffoEgg">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family:-apple-system,"Hiragino Maru Gothic Pro",sans-serif;
-  background:#F6FAF0;color:#1A3A1A;
-  font-size:16px;padding-bottom:60px;
-  -webkit-text-size-adjust:100%;
-}
+body{font-family:-apple-system,"Hiragino Maru Gothic Pro",sans-serif;background:#F6FAF0;color:#1A3A1A;font-size:16px;padding-bottom:60px;-webkit-text-size-adjust:100%;}
 .hd{background:#2D6A2D;padding:16px;padding-bottom:40px;position:relative;overflow:hidden;}
-.hd::after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:24px;
-  background:#F6FAF0;border-radius:50% 50% 0 0/24px 24px 0 0;}
+.hd::after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:24px;background:#F6FAF0;border-radius:50% 50% 0 0/24px 24px 0 0;}
 .hd-in{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
-.hd-logo{width:48px;height:48px;background:#fff;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
 .hd h1{font-size:20px;font-weight:800;color:#fff;}
 .hd p{font-size:11px;color:rgba(255,255,255,.8);margin-top:2px;}
 .tb-wrap{background:#F6FAF0;padding:10px 14px 6px;}
-.tb{display:grid;grid-template-columns:repeat(4,1fr);
-  background:#fff;border-radius:12px;padding:4px;gap:3px;}
-.tab{padding:10px 0;font-size:12px;font-weight:800;color:#5A8A5A;
-  background:none;border:none;cursor:pointer;border-radius:9px;
-  line-height:1.4;font-family:inherit;-webkit-appearance:none;}
+.tb{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:12px;padding:4px;gap:3px;}
+.tab{padding:10px 0;font-size:12px;font-weight:800;color:#5A8A5A;background:none;border:none;cursor:pointer;border-radius:9px;line-height:1.4;font-family:inherit;-webkit-appearance:none;}
 .tab.on{background:#2D6A2D;color:#fff;}
 .pg{display:none;padding:12px 14px;}
 .pg.on{display:block;}
 .dr{display:flex;gap:8px;margin-bottom:14px;}
-.dr input[type=date]{
-  flex:1;padding:13px 12px;border:2px solid #C0DCC0;border-radius:10px;
-  font-size:16px;background:#fff;-webkit-appearance:none;font-family:inherit;}
-.btn-t{padding:13px 16px;background:#D0EAD0;border:2px solid #C0DCC0;
-  border-radius:10px;font-size:14px;font-weight:800;color:#2D6A2D;
-  cursor:pointer;white-space:nowrap;font-family:inherit;-webkit-appearance:none;}
+.dr input[type=date]{flex:1;padding:13px 12px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#fff;-webkit-appearance:none;font-family:inherit;}
+.btn-t{padding:13px 16px;background:#D0EAD0;border:2px solid #C0DCC0;border-radius:10px;font-size:14px;font-weight:800;color:#2D6A2D;cursor:pointer;white-space:nowrap;font-family:inherit;-webkit-appearance:none;}
 .stl{font-size:14px;font-weight:800;color:#1A4A1A;margin-bottom:10px;}
 .rg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
-.rb{
-  background:#fff;border:2.5px solid #C0DCC0;border-radius:14px;
-  padding:16px 4px 12px;text-align:center;position:relative;
-  font-family:inherit;cursor:pointer;-webkit-appearance:none;
-  -webkit-tap-highlight-color:rgba(45,106,45,0.2);
-  touch-action:manipulation;
-}
+.rb{background:#fff;border:2.5px solid #C0DCC0;border-radius:14px;padding:16px 4px 12px;text-align:center;position:relative;font-family:inherit;cursor:pointer;-webkit-appearance:none;-webkit-tap-highlight-color:rgba(45,106,45,0.2);touch-action:manipulation;}
 .rb.on{border-color:#3D8A3D;background:#EAF5EA;}
 .rb .rn{font-size:26px;font-weight:800;color:#2D6A2D;display:block;line-height:1;}
 .rb .rs{font-size:11px;color:#5A8A5A;margin-top:4px;font-weight:700;display:block;}
-.rb .bdg{position:absolute;top:-7px;right:-7px;background:#F5E100;color:#1A4A1A;
-  font-size:10px;font-weight:800;min-width:20px;height:20px;padding:0 3px;
-  border-radius:10px;display:none;align-items:center;justify-content:center;
-  border:2px solid #F6FAF0;}
-.sel-b{display:inline-block;background:#2D6A2D;color:#fff;
-  padding:9px 18px;border-radius:22px;font-size:15px;font-weight:800;
-  margin-bottom:12px;}
-.card{background:#fff;border-radius:16px;border:1.5px solid #C0DCC0;
-  padding:16px;margin-bottom:12px;}
-.ct{font-size:14px;font-weight:800;color:#2D6A2D;margin-bottom:14px;
-  padding-bottom:10px;border-bottom:1.5px dashed #C0DCC0;}
+.rb .bdg{position:absolute;top:-7px;right:-7px;background:#F5E100;color:#1A4A1A;font-size:10px;font-weight:800;min-width:20px;height:20px;padding:0 3px;border-radius:10px;display:none;align-items:center;justify-content:center;border:2px solid #F6FAF0;}
+.sel-b{display:inline-block;background:#2D6A2D;color:#fff;padding:9px 18px;border-radius:22px;font-size:15px;font-weight:800;margin-bottom:12px;}
+.card{background:#fff;border-radius:16px;border:1.5px solid #C0DCC0;padding:16px;margin-bottom:12px;}
+.ct{font-size:14px;font-weight:800;color:#2D6A2D;margin-bottom:14px;padding-bottom:10px;border-bottom:1.5px dashed #C0DCC0;}
 .fi{margin-bottom:13px;}
 .fi:last-child{margin-bottom:0;}
 .fi label{display:block;font-size:12px;font-weight:800;color:#5A8A5A;margin-bottom:7px;}
-.fi input[type=text],.fi textarea,.fi select{
-  width:100%;padding:13px 14px;border:2px solid #C0DCC0;border-radius:10px;
-  font-size:16px;background:#EAF5EA;font-family:inherit;-webkit-appearance:none;}
+.fi input[type=text],.fi textarea,.fi select{width:100%;padding:13px 14px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;-webkit-appearance:none;}
 .fi textarea{resize:none;height:72px;}
-.num-input{
-  width:100%;padding:14px;border:2px solid #B5DDB5;border-radius:10px;
-  font-size:36px;font-weight:800;color:#2D6A2D;background:#fff;
-  text-align:center;font-family:inherit;
-  -webkit-appearance:none;-moz-appearance:textfield;
-  display:block;}
-.num-input::-webkit-outer-spin-button,
-.num-input::-webkit-inner-spin-button{-webkit-appearance:none;}
+.num-input{width:100%;padding:14px;border:2px solid #B5DDB5;border-radius:10px;font-size:36px;font-weight:800;color:#2D6A2D;background:#fff;text-align:center;font-family:inherit;-webkit-appearance:none;-moz-appearance:textfield;display:block;}
+.num-input::-webkit-outer-spin-button,.num-input::-webkit-inner-spin-button{-webkit-appearance:none;}
 .num-input:focus{outline:none;border-color:#3D8A3D;background:#EAF5EA;}
 .num-input.brk{color:#C0392B;border-color:#FFB5B5;}
 .num-input.brk:focus{background:#FFF0F0;}
-.btn-save{width:100%;padding:18px;background:#2D6A2D;color:#fff;border:none;
-  border-radius:16px;font-size:18px;font-weight:800;cursor:pointer;
-  margin-top:6px;font-family:inherit;-webkit-appearance:none;
-  touch-action:manipulation;}
+.btn-save{width:100%;padding:18px;background:#2D6A2D;color:#fff;border:none;border-radius:16px;font-size:18px;font-weight:800;cursor:pointer;margin-top:6px;font-family:inherit;-webkit-appearance:none;touch-action:manipulation;}
 .btn-save:active{background:#1A4A1A;}
 .btn-save:disabled{background:#A0C0A0;cursor:not-allowed;}
-.ti{background:#fff;border:1.5px solid #C0DCC0;border-radius:16px;
-  padding:14px 16px;margin-bottom:10px;display:flex;
-  justify-content:space-between;align-items:center;}
-.ti .rt{font-weight:800;color:#2D6A2D;font-size:16px;}
-.ti .ei{font-size:12px;color:#5A8A5A;margin-top:3px;}
-.ti .et{font-size:34px;font-weight:800;color:#2D6A2D;line-height:1;text-align:right;}
-.ti .eu{font-size:12px;color:#5A8A5A;text-align:right;}
-.tc{background:#2D6A2D;border-radius:16px;padding:22px;text-align:center;
-  color:#fff;margin-top:14px;}
-.tc .tl{font-size:14px;opacity:.9;font-weight:700;}
-.tc .tn{font-size:56px;font-weight:800;}
-.tc .tu{font-size:18px;opacity:.9;}
 .sw{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .st{width:100%;border-collapse:collapse;font-size:13px;min-width:360px;}
 .st th{background:#2D6A2D;color:#fff;font-weight:800;padding:10px 6px;text-align:center;font-size:11px;}
@@ -107,11 +56,7 @@ body{
 .st td:first-child{text-align:left;font-weight:700;color:#5A8A5A;white-space:nowrap;}
 .st .tot{font-weight:800;color:#2D6A2D;}
 .st tr:nth-child(even) td{background:#EAF5EA;}
-.toast{position:fixed;bottom:20px;left:50%;
-  transform:translateX(-50%) translateY(60px);
-  background:#1A4A1A;color:#fff;padding:13px 26px;border-radius:30px;
-  font-size:15px;font-weight:700;opacity:0;transition:all .3s;
-  z-index:9999;white-space:nowrap;pointer-events:none;font-family:inherit;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:#1A4A1A;color:#fff;padding:13px 26px;border-radius:30px;font-size:15px;font-weight:700;opacity:0;transition:all .3s;z-index:9999;white-space:nowrap;pointer-events:none;font-family:inherit;}
 .toast.ok{background:#3D8A3D;}
 .toast.ng{background:#C0392B;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -136,73 +81,80 @@ body{
 .rec-save-btn:active{background:#1A4A1A;}
 .di{cursor:pointer;transition:background .15s;}
 .di:active{background:#EAF5EA;}
-.st tr.month-row { cursor:pointer; }
-.st tr.month-row:hover td { background:#EAF5EA !important; }
-.st tr.month-row td { transition:background .15s; }
-.st tr.month-row td:first-child { color:#2D6A2D; text-decoration:underline dotted #2D6A2D; }
-.month-modal-inner { padding:0 12px 12px; }
-.month-banner { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0; }
-.month-card-g { background:#2D6A2D; color:#fff; border-radius:12px; padding:12px; text-align:center; }
-.month-card-w { background:#fff; border:1.5px solid #C0DCC0; color:#1A4A1A; border-radius:12px; padding:12px; text-align:center; }
-.mc-lb { font-size:10px; opacity:.85; font-weight:bold; margin-bottom:3px; }
-.mc-vl { font-size:26px; font-weight:800; line-height:1; }
-.mc-un { font-size:10px; opacity:.8; margin-top:2px; }
+.st tr.month-row{cursor:pointer;}
+.st tr.month-row:hover td{background:#EAF5EA !important;}
+.st tr.month-row td{transition:background .15s;}
+.st tr.month-row td:first-child{color:#2D6A2D;text-decoration:underline dotted #2D6A2D;}
+.month-modal-inner{padding:0 12px 12px;}
+.month-banner{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
+.month-card-g{background:#2D6A2D;color:#fff;border-radius:12px;padding:12px;text-align:center;}
+.month-card-w{background:#fff;border:1.5px solid #C0DCC0;color:#1A4A1A;border-radius:12px;padding:12px;text-align:center;}
+.mc-lb{font-size:10px;opacity:.85;font-weight:bold;margin-bottom:3px;}
+.mc-vl{font-size:26px;font-weight:800;line-height:1;}
+.mc-un{font-size:10px;opacity:.8;margin-top:2px;}
 .mn-banner{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .mn-card{background:#2D6A2D;border-radius:14px;padding:14px;text-align:center;color:#fff;}
 .mn-card.sub{background:#fff;border:1.5px solid #C0DCC0;color:#1A4A1A;}
 .mn-card .mn-label{font-size:11px;opacity:.85;font-weight:700;margin-bottom:4px;}
 .mn-card .mn-val{font-size:32px;font-weight:800;line-height:1;}
 .mn-card .mn-unit{font-size:13px;opacity:.8;margin-top:2px;}
-.di{background:#fff;border:1.5px solid #C0DCC0;border-radius:12px;
-  padding:12px 14px;margin-bottom:8px;}
+.di{background:#fff;border:1.5px solid #C0DCC0;border-radius:12px;padding:12px 14px;margin-bottom:8px;}
 .di .dt{font-size:14px;font-weight:800;color:#2D6A2D;}
 .di .dd{font-size:11px;color:#5A8A5A;margin-top:3px;}
 .di .dv{font-size:28px;font-weight:800;color:#2D6A2D;text-align:right;}
 .di .du{font-size:11px;color:#5A8A5A;text-align:right;}
-.sale-banner{background:#2D6A2D;border-radius:14px;padding:14px 16px;
-  margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.sale-banner{background:#2D6A2D;border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
 .sale-banner .sb-label{font-size:13px;color:rgba(255,255,255,.85);font-weight:700;}
 .sale-banner .sb-val{font-size:26px;font-weight:800;color:#fff;white-space:nowrap;}
 .sub-tb{display:flex;gap:6px;margin-bottom:14px;}
-.sub-tab{flex:1;padding:10px;background:#fff;border:2px solid #C0DCC0;
-  border-radius:10px;font-size:13px;font-weight:800;color:#5A8A5A;
-  cursor:pointer;font-family:inherit;-webkit-appearance:none;text-align:center;}
+.sub-tab{flex:1;padding:10px;background:#fff;border:2px solid #C0DCC0;border-radius:10px;font-size:13px;font-weight:800;color:#5A8A5A;cursor:pointer;font-family:inherit;-webkit-appearance:none;text-align:center;}
 .sub-tab.on{background:#2D6A2D;color:#fff;border-color:#2D6A2D;}
 .sz-item-wrap{margin-bottom:4px;}
-.sz-name{width:100%;padding:10px 12px;border:2px solid #C0DCC0;border-radius:10px;
-  font-size:15px;background:#EAF5EA;font-family:inherit;-webkit-appearance:none;}
-.sz-qty{width:100%;padding:10px 8px;border:2px solid #C0DCC0;border-radius:10px;
-  font-size:15px;background:#EAF5EA;font-family:inherit;text-align:center;
-  -webkit-appearance:none;-moz-appearance:textfield;}
+.sz-name{width:100%;padding:10px 12px;border:2px solid #C0DCC0;border-radius:10px;font-size:15px;background:#EAF5EA;font-family:inherit;-webkit-appearance:none;}
+.sz-qty{width:100%;padding:10px 8px;border:2px solid #C0DCC0;border-radius:10px;font-size:15px;background:#EAF5EA;font-family:inherit;text-align:center;-webkit-appearance:none;-moz-appearance:textfield;}
 .sz-qty::-webkit-outer-spin-button,.sz-qty::-webkit-inner-spin-button{-webkit-appearance:none;}
-.sz-unit{width:100%;padding:10px 6px;border:2px solid #C0DCC0;border-radius:10px;
-  font-size:14px;background:#EAF5EA;font-family:inherit;-webkit-appearance:none;}
-.sz-price{width:100%;padding:10px 12px;border:2px solid #C0DCC0;border-radius:10px;
-  font-size:15px;background:#EAF5EA;font-family:inherit;-webkit-appearance:none;
-  -moz-appearance:textfield;}
+.sz-unit{width:100%;padding:10px 6px;border:2px solid #C0DCC0;border-radius:10px;font-size:14px;background:#EAF5EA;font-family:inherit;-webkit-appearance:none;}
+.sz-price{width:100%;padding:10px 12px;border:2px solid #C0DCC0;border-radius:10px;font-size:15px;background:#EAF5EA;font-family:inherit;-webkit-appearance:none;-moz-appearance:textfield;}
 .sz-price::-webkit-outer-spin-button,.sz-price::-webkit-inner-spin-button{-webkit-appearance:none;}
-.sz-month{background:#fff;border:1.5px solid #C0DCC0;border-radius:14px;
-  margin-bottom:12px;overflow:hidden;}
-.sz-month-h{background:#2D6A2D;color:#fff;padding:10px 14px;
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:14px;font-weight:800;}
+.sz-month{background:#fff;border:1.5px solid #C0DCC0;border-radius:14px;margin-bottom:12px;overflow:hidden;}
+.sz-month-h{background:#2D6A2D;color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:800;}
 .sz-month-body{padding:10px 14px;}
-.sz-item{display:flex;justify-content:space-between;padding:5px 0;
-  border-bottom:1px solid #EAF5EA;font-size:13px;}
+.sz-item{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #EAF5EA;font-size:13px;}
 .sz-item:last-child{border-bottom:none;}
 .sz-total{font-weight:800;color:#2D6A2D;padding-top:6px;text-align:right;font-size:13px;}
-#milestone-banner{
-  display:none;
-  background:linear-gradient(135deg,#FFD700,#FFA500);
-  color:#1A3A00;
-  text-align:center;
-  padding:14px 16px;
-  font-size:18px;
-  font-weight:800;
-  letter-spacing:.5px;
-  animation:mpulse 2s ease-in-out infinite;
-}
+#milestone-banner{display:none;background:linear-gradient(135deg,#FFD700,#FFA500);color:#1A3A00;text-align:center;padding:14px 16px;font-size:18px;font-weight:800;letter-spacing:.5px;animation:mpulse 2s ease-in-out infinite;}
 @keyframes mpulse{0%,100%{opacity:1}50%{opacity:.82}}
+
+/* ---- モード切替 ---- */
+.mode-toggle{display:flex;gap:6px;margin-bottom:14px;}
+.mode-btn{flex:1;padding:12px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;-webkit-appearance:none;border:2px solid #C0DCC0;background:#fff;color:#5A8A5A;transition:all .2s;}
+.mode-btn.on{background:#2D6A2D;color:#fff;border-color:#2D6A2D;}
+
+/* ---- 音声セッション ---- */
+.vs-status{border-radius:12px;padding:14px 16px;margin-bottom:10px;font-size:13px;font-weight:800;text-align:center;background:#EAF5EA;color:#5A8A5A;border:2px solid #C0DCC0;transition:all .3s;line-height:1.5;}
+.vs-status.listening{background:#FFF0F0;color:#C0392B;border-color:#C0392B;animation:vpulse 1.5s ease-in-out infinite;}
+@keyframes vpulse{0%,100%{opacity:1}50%{opacity:.55}}
+.vs-transcript{background:#fff;border:1.5px solid #C0DCC0;border-radius:10px;padding:12px 14px;margin-bottom:10px;font-size:14px;color:#A0C0A0;min-height:46px;font-weight:600;}
+.vs-transcript.active{color:#1A3A1A;}
+.vs-controls{display:flex;gap:8px;margin-bottom:12px;}
+.vs-btn-start{flex:2;padding:16px;background:#C0392B;color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;-webkit-appearance:none;touch-action:manipulation;transition:background .2s;}
+.vs-btn-start.active{background:#7B241C;}
+.vs-btn-clear{flex:1;padding:16px;background:#fff;color:#5A8A5A;border:2px solid #C0DCC0;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;-webkit-appearance:none;touch-action:manipulation;}
+.vs-guide{background:#EAF5EA;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:12px;color:#2D6A2D;font-weight:700;line-height:2;}
+.vs-guide .kw{display:inline-block;background:#2D6A2D;color:#fff;padding:1px 8px;border-radius:10px;font-size:11px;margin-right:4px;}
+.vs-card{background:#fff;border:1.5px solid #C0DCC0;border-radius:14px;margin-bottom:8px;overflow:hidden;}
+.vs-card-h{background:#2D6A2D;color:#fff;padding:10px 14px;font-size:14px;font-weight:800;display:flex;justify-content:space-between;align-items:center;}
+.vs-card-total{font-size:20px;font-weight:800;}
+.vs-card-del{background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;cursor:pointer;padding:0 0 0 8px;line-height:1;font-family:inherit;}
+.vs-card-body{display:flex;gap:6px;padding:12px 14px;}
+.vs-field{flex:1;text-align:center;}
+.vs-field label{display:block;font-size:10px;color:#5A8A5A;font-weight:800;margin-bottom:4px;}
+.vs-inp{width:100%;padding:10px 2px;border:1.5px solid #C0DCC0;border-radius:8px;font-size:22px;font-weight:800;color:#2D6A2D;background:#EAF5EA;text-align:center;font-family:inherit;-webkit-appearance:none;-moz-appearance:textfield;}
+.vs-inp::-webkit-outer-spin-button,.vs-inp::-webkit-inner-spin-button{-webkit-appearance:none;}
+.vs-inp.brk{color:#C0392B;border-color:#FFB5B5;background:#FFF0F0;}
+.vs-save-all{width:100%;padding:18px;background:#2D6A2D;color:#fff;border:none;border-radius:16px;font-size:18px;font-weight:800;cursor:pointer;font-family:inherit;-webkit-appearance:none;touch-action:manipulation;margin-top:4px;}
+.vs-save-all:disabled{background:#A0C0A0;cursor:not-allowed;}
+.vs-empty{text-align:center;color:#A0C0A0;font-size:13px;padding:16px 0;}
 </style>
 </head>
 <body>
@@ -214,10 +166,7 @@ body{
   </div>
   <div class="hd-in">
     <img src="buffo_icon_180.png" alt="buffo" style="width:48px;height:48px;border-radius:12px;object-fit:cover;flex-shrink:0;">
-    <div>
-      <h1>buffoEgg's App</h1>
-      <p>ふぁーむbuffo　産卵・給餌管理</p>
-    </div>
+    <div><h1>buffoEgg's App</h1><p>ふぁーむbuffo　産卵・給餌管理</p></div>
   </div>
 </div>
 
@@ -238,65 +187,110 @@ body{
     <input type="date" id="record-date">
     <button class="btn-t" onclick="setToday('record-date')">今日</button>
   </div>
-  <p class="stl">● 号舎を選んでね</p>
-  <div class="rg" id="room-grid"></div>
-  <div id="form-area" style="display:none;">
-    <div class="sel-b" id="sel-badge">🏠 1号舎</div>
-    <div id="flock-bar" style="background:#fff;border:1.5px solid #C0DCC0;border-radius:14px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-      <div>
-        <div style="font-size:12px;color:#5A8A5A;font-weight:700;margin-bottom:2px;">🐔 鶏舎情報</div>
-        <div id="flock-info" style="font-size:14px;font-weight:800;color:#1A4A1A;">入舎データなし</div>
+
+  <!-- モード切替 -->
+  <div class="mode-toggle">
+    <button class="mode-btn on" id="mode-manual" onclick="setMode('manual')">✏️ 手動入力</button>
+    <button class="mode-btn"   id="mode-voice"  onclick="setMode('voice')">🎤 音声一括入力</button>
+  </div>
+
+  <!-- 手動入力パネル -->
+  <div id="panel-manual">
+    <p class="stl">● 号舎を選んでね</p>
+    <div class="rg" id="room-grid"></div>
+    <div id="form-area" style="display:none;">
+      <div class="sel-b" id="sel-badge">🏠 1号舎</div>
+      <div id="flock-bar" style="background:#fff;border:1.5px solid #C0DCC0;border-radius:14px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div>
+          <div style="font-size:12px;color:#5A8A5A;font-weight:700;margin-bottom:2px;">🐔 鶏舎情報</div>
+          <div id="flock-info" style="font-size:14px;font-weight:800;color:#1A4A1A;">入舎データなし</div>
+        </div>
+        <button onclick="toggleFlockPanel()" style="background:#D0EAD0;border:1.5px solid #C0DCC0;border-radius:10px;padding:7px 12px;font-size:12px;font-weight:800;color:#2D6A2D;cursor:pointer;font-family:inherit;white-space:nowrap;" id="flock-toggle-btn">＋ 更新</button>
       </div>
-      <button onclick="toggleFlockPanel()" style="background:#D0EAD0;border:1.5px solid #C0DCC0;border-radius:10px;padding:7px 12px;font-size:12px;font-weight:800;color:#2D6A2D;cursor:pointer;font-family:inherit;white-space:nowrap;" id="flock-toggle-btn">＋ 更新</button>
-    </div>
-    <div id="flock-panel" style="display:none;">
-      <div class="card" style="border-color:#B5DDB5;">
-        <div class="ct" style="color:#1A4A1A;">🐔 鶏舎情報の登録・更新</div>
-        <div style="display:flex;gap:6px;margin-bottom:14px;">
-          <button id="fpb-entry" onclick="fpSw('entry')" style="flex:1;padding:9px;border-radius:10px;font-size:12px;font-weight:800;background:#2D6A2D;color:#fff;border:2px solid #2D6A2D;cursor:pointer;font-family:inherit;">➕ 入舎登録</button>
-          <button id="fpb-change" onclick="fpSw('change')" style="flex:1;padding:9px;border-radius:10px;font-size:12px;font-weight:800;background:#fff;color:#2D6A2D;border:2px solid #C0DCC0;cursor:pointer;font-family:inherit;">📉 羽数変動</button>
-        </div>
-        <div id="fpp-entry">
-          <div class="fi"><label>入舎日</label><div style="display:flex;gap:8px;"><input type="date" id="fr-entry" style="flex:1;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><button class="btn-t" onclick="setToday('fr-entry')">今日</button></div></div>
-          <div class="fi"><label>入舎時の日齢</label><input type="number" id="fr-age" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*" placeholder="例：45"></div>
-          <div class="fi"><label>入舎羽数</label><input type="number" id="fr-count" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
-          <div class="fi"><label>品種・メモ</label><input type="text" id="fr-breed" placeholder="例：岡崎おうはん" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
-          <div class="fi"><label>記録者</label><input type="text" id="fr-rec" placeholder="お名前" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
-          <button class="btn-save" style="margin-top:8px;" onclick="doSaveFlock()">入舎を登録</button>
-        </div>
-        <div id="fpp-change" style="display:none;">
-          <div class="fi"><label>日付</label><div style="display:flex;gap:8px;"><input type="date" id="fc-date" style="flex:1;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><button class="btn-t" onclick="setToday('fc-date')">今日</button></div></div>
-          <div class="fi"><label>変動種別</label><select id="fc-type" onchange="toggleAddFields()" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><option value="">選んでね</option><option>出荷（肉）</option><option>死亡</option><option>移動（他号舎へ）</option><option>追加（他号舎から）</option><option>追加（新規）</option><option>その他</option></select></div>
-          <div class="fi"><label id="fc-count-label">羽数（減少分）</label><input type="number" id="fc-count" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
-          <div id="fc-add-fields" style="display:none;">
-            <div class="fi"><label>移動元の号舎（他号舎から追加の場合）</label><select id="fc-source" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><option value="">選んでね</option><option>1号舎</option><option>2号舎</option><option>3号舎</option><option>4号舎</option><option>5号舎</option><option>6号舎</option><option>7号舎</option><option value="その他">その他（新規購入など）</option></select></div>
-            <div class="fi"><label>追加する鶏の品種</label><input type="text" id="fc-add-breed" placeholder="例：寒曳地鶏" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
-            <div class="fi"><label>追加する鶏の日齢</label><input type="number" id="fc-add-age" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*" placeholder="例：260"></div>
+      <div id="flock-panel" style="display:none;">
+        <div class="card" style="border-color:#B5DDB5;">
+          <div class="ct" style="color:#1A4A1A;">🐔 鶏舎情報の登録・更新</div>
+          <div style="display:flex;gap:6px;margin-bottom:14px;">
+            <button id="fpb-entry" onclick="fpSw('entry')" style="flex:1;padding:9px;border-radius:10px;font-size:12px;font-weight:800;background:#2D6A2D;color:#fff;border:2px solid #2D6A2D;cursor:pointer;font-family:inherit;">➕ 入舎登録</button>
+            <button id="fpb-change" onclick="fpSw('change')" style="flex:1;padding:9px;border-radius:10px;font-size:12px;font-weight:800;background:#fff;color:#2D6A2D;border:2px solid #C0DCC0;cursor:pointer;font-family:inherit;">📉 羽数変動</button>
           </div>
-          <div class="fi"><label>メモ</label><textarea id="fc-memo" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;resize:none;height:60px;font-family:inherit;" placeholder="状況など"></textarea></div>
-          <div class="fi"><label>記録者</label><input type="text" id="fc-rec" placeholder="お名前" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
-          <button class="btn-save" id="fc-save-btn" style="margin-top:8px;background:#C0392B;" onclick="doSaveFlockChange()">変動を記録</button>
+          <div id="fpp-entry">
+            <div class="fi"><label>入舎日</label><div style="display:flex;gap:8px;"><input type="date" id="fr-entry" style="flex:1;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><button class="btn-t" onclick="setToday('fr-entry')">今日</button></div></div>
+            <div class="fi"><label>入舎時の日齢</label><input type="number" id="fr-age" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*" placeholder="例：45"></div>
+            <div class="fi"><label>入舎羽数</label><input type="number" id="fr-count" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
+            <div class="fi"><label>品種・メモ</label><input type="text" id="fr-breed" placeholder="例：岡崎おうはん" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
+            <div class="fi"><label>記録者</label><input type="text" id="fr-rec" placeholder="お名前" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
+            <button class="btn-save" style="margin-top:8px;" onclick="doSaveFlock()">入舎を登録</button>
+          </div>
+          <div id="fpp-change" style="display:none;">
+            <div class="fi"><label>日付</label><div style="display:flex;gap:8px;"><input type="date" id="fc-date" style="flex:1;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><button class="btn-t" onclick="setToday('fc-date')">今日</button></div></div>
+            <div class="fi"><label>変動種別</label><select id="fc-type" onchange="toggleAddFields()" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><option value="">選んでね</option><option>出荷（肉）</option><option>死亡</option><option>移動（他号舎へ）</option><option>追加（他号舎から）</option><option>追加（新規）</option><option>その他</option></select></div>
+            <div class="fi"><label id="fc-count-label">羽数（減少分）</label><input type="number" id="fc-count" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
+            <div id="fc-add-fields" style="display:none;">
+              <div class="fi"><label>移動元の号舎</label><select id="fc-source" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><option value="">選んでね</option><option>1号舎</option><option>2号舎</option><option>3号舎</option><option>4号舎</option><option>5号舎</option><option>6号舎</option><option>7号舎</option><option value="その他">その他</option></select></div>
+              <div class="fi"><label>追加する鶏の品種</label><input type="text" id="fc-add-breed" placeholder="例：寒曳地鶏" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
+              <div class="fi"><label>追加する鶏の日齢</label><input type="number" id="fc-add-age" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
+            </div>
+            <div class="fi"><label>メモ</label><textarea id="fc-memo" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;resize:none;height:60px;font-family:inherit;" placeholder="状況など"></textarea></div>
+            <div class="fi"><label>記録者</label><input type="text" id="fc-rec" placeholder="お名前" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
+            <button class="btn-save" id="fc-save-btn" style="margin-top:8px;background:#C0392B;" onclick="doSaveFlockChange()">変動を記録</button>
+          </div>
         </div>
       </div>
+      <div class="card">
+        <div class="ct">🥚 産卵数</div>
+        <div class="fi"><label>普通卵（個）</label><input type="number" id="ne" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
+        <div class="fi"><label>ヒビ（個）</label><input type="number" id="he" class="num-input brk" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
+        <div class="fi"><label>規格外（個）</label><input type="number" id="ke" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*" style="color:#8A5A00;border-color:#D4A84B;"></div>
+      </div>
+      <div class="card">
+        <div class="ct">🌾 給餌</div>
+        <div class="fi"><label>配合飼料</label><input type="text" id="feed" placeholder="例：3kg"></div>
+        <div class="fi"><label>草・野菜</label><input type="text" id="grass" placeholder="例：キャベツ外葉"></div>
+        <div class="fi"><label>その他</label><input type="text" id="other" placeholder="例：米ぬか"></div>
+      </div>
+      <div class="card">
+        <div class="ct">📝 メモ・記録者</div>
+        <div class="fi"><textarea id="memo" placeholder="気づきや体調など"></textarea></div>
+        <div class="fi"><label>記録者</label><input type="text" id="recorder" placeholder="お名前"></div>
+      </div>
+      <button class="btn-save" id="sub-btn" onclick="doSave()">保存する</button>
     </div>
-    <div class="card">
-      <div class="ct">🥚 産卵数</div>
-      <div class="fi"><label>普通卵（個）</label><input type="number" id="ne" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
-      <div class="fi"><label>ヒビ（個）</label><input type="number" id="he" class="num-input brk" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
-      <div class="fi"><label>規格外（個）</label><input type="number" id="ke" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*" style="color:#8A5A00;border-color:#D4A84B;"></div>
+  </div>
+
+  <!-- 音声一括入力パネル -->
+  <div id="panel-voice" style="display:none;">
+
+    <!-- ステータス -->
+    <div class="vs-status" id="vs-status">⏹ 停止中 — 「音声記録開始」を押してください</div>
+
+    <!-- ライブ文字起こし -->
+    <div class="vs-transcript" id="vs-transcript">ここに認識した音声が表示されます</div>
+
+    <!-- コントロール -->
+    <div class="vs-controls">
+      <button class="vs-btn-start" id="vs-btn-start" onclick="toggleVoiceSession()">🎤 音声記録開始</button>
+      <button class="vs-btn-clear" onclick="clearVsSession()">🗑 クリア</button>
     </div>
-    <div class="card">
-      <div class="ct">🌾 給餌</div>
-      <div class="fi"><label>配合飼料</label><input type="text" id="feed" placeholder="例：3kg"></div>
-      <div class="fi"><label>草・野菜</label><input type="text" id="grass" placeholder="例：キャベツ外葉"></div>
-      <div class="fi"><label>その他</label><input type="text" id="other" placeholder="例：米ぬか"></div>
+
+    <!-- 発話ガイド -->
+    <div class="vs-guide">
+      <span class="kw">記録1件</span>「1号舎 普通32個 ヒビ2個 規格外1個 <b>記録終了</b>」<br>
+      <span class="kw">次の号舎</span>「2号舎 普通28個 <b>記録終了</b>」（ヒビ・規格外省略OK）<br>
+      <span class="kw">全体終了</span>「<b>セッション終了</b>」または停止ボタン
     </div>
-    <div class="card">
-      <div class="ct">📝 メモ・記録者</div>
-      <div class="fi"><textarea id="memo" placeholder="気づきや体調など"></textarea></div>
-      <div class="fi"><label>記録者</label><input type="text" id="recorder" placeholder="お名前"></div>
+
+    <!-- 記録者 -->
+    <div class="fi" style="margin-bottom:12px;">
+      <label>記録者</label>
+      <input type="text" id="vs-recorder" placeholder="お名前" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;">
     </div>
-    <button class="btn-save" id="sub-btn" onclick="doSave()">保存する</button>
+
+    <!-- セッションログ -->
+    <div id="vs-log"><div class="vs-empty">まだ記録がありません</div></div>
+
+    <!-- 一括保存 -->
+    <button class="vs-save-all" id="vs-save-all" onclick="saveAllSession()" disabled>💾 全て保存する</button>
   </div>
 </div>
 
@@ -316,10 +310,7 @@ body{
     <div class="sb-label" id="sale-banner-label">当月の販売合計</div>
     <div class="sb-val" id="sale-banner-val">取得中...</div>
   </div>
-  <div class="dr">
-    <input type="date" id="sale-date">
-    <button class="btn-t" onclick="setToday('sale-date')">今日</button>
-  </div>
+  <div class="dr"><input type="date" id="sale-date"><button class="btn-t" onclick="setToday('sale-date')">今日</button></div>
   <div class="card">
     <div class="ct">🛒 販売内容</div>
     <div class="fi"><label>販売個数</label><input type="number" id="sq" class="num-input" value="0" min="0" inputmode="numeric" pattern="[0-9]*"></div>
@@ -342,10 +333,7 @@ body{
   <div id="sp-shizai" style="display:none;">
     <div id="shizai-history"><div class="ld">読み込み中...</div></div>
     <div class="card">
-      <div class="ct" style="display:flex;justify-content:space-between;align-items:center;">
-        <span>📦 資材コストを記録</span>
-        <span id="sz-live-total" style="font-size:18px;color:#2D6A2D;font-weight:800;">¥0</span>
-      </div>
+      <div class="ct" style="display:flex;justify-content:space-between;align-items:center;"><span>📦 資材コストを記録</span><span id="sz-live-total" style="font-size:18px;color:#2D6A2D;font-weight:800;">¥0</span></div>
       <div class="fi"><label>対象月</label><div style="display:flex;gap:8px;align-items:center;"><input type="month" id="sz-month" style="flex:1;padding:12px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><button class="btn-t" onclick="setSzThisMonth()">今月</button></div></div>
       <div id="sz-rows"></div>
       <div class="fi" style="margin-top:10px;"><label>記録者</label><input type="text" id="sz-recorder" placeholder="お名前" style="width:100%;padding:12px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
@@ -379,682 +367,415 @@ body{
 <div class="toast" id="toast"></div>
 
 <script>
-// ============================================================
-// ★ デプロイ後のURLに書き換えてください
-// ============================================================
 var GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyT3R_54xZOcX1Trb-6ltqVMrgMW0CWgSgm_Co0LSPlZAQFBqQRr96mRlpEJs9S5vTJ/exec';
 
-// ============================================================
-// GAS API 共通呼び出し関数
-// GET: データ取得 / POST: データ保存（FormData使用でCORS対策済み）
-// ============================================================
 function callGAS(action, params, method) {
-  params = params || {};
-  method = method || 'GET';
+  params = params || {}; method = method || 'GET';
   return new Promise(function(resolve, reject) {
     if (method === 'GET') {
       var parts = ['action=' + encodeURIComponent(action)];
-      Object.keys(params).forEach(function(k) {
-        var v = params[k];
-        parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(v == null ? '' : v));
-      });
-      fetch(GAS_API_URL + '?' + parts.join('&'))
-        .then(function(r) { return r.json(); })
-        .then(function(json) {
-          if (json.success !== false) resolve(json.data);
-          else reject(new Error(json.error || 'GAS error'));
-        })
-        .catch(reject);
+      Object.keys(params).forEach(function(k) { var v = params[k]; parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(v == null ? '' : v)); });
+      fetch(GAS_API_URL + '?' + parts.join('&')).then(function(r){return r.json();}).then(function(json){ if(json.success!==false) resolve(json.data); else reject(new Error(json.error||'GAS error')); }).catch(reject);
     } else {
-      var fd = new FormData();
-      fd.append('action', action);
-      Object.keys(params).forEach(function(k) {
-        var v = params[k];
-        fd.append(k, typeof v === 'object' ? JSON.stringify(v) : String(v == null ? '' : v));
-      });
-      fetch(GAS_API_URL, { method: 'POST', body: fd })
-        .then(function(r) { return r.json(); })
-        .then(function(json) {
-          if (json.success !== false) resolve(json.data);
-          else reject(new Error(json.error || 'GAS error'));
-        })
-        .catch(reject);
+      var fd = new FormData(); fd.append('action', action);
+      Object.keys(params).forEach(function(k){ var v=params[k]; fd.append(k, typeof v==='object'?JSON.stringify(v):String(v==null?'':v)); });
+      fetch(GAS_API_URL,{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(json){ if(json.success!==false) resolve(json.data); else reject(new Error(json.error||'GAS error')); }).catch(reject);
     }
   });
 }
 
-// ============================================================
-// アプリ初期化
-// ============================================================
 var sel = "";
 var rooms = ["1号舎","2号舎","3号舎","4号舎","5号舎","6号舎","7号舎"];
 
 function init() {
-  setToday("record-date");
-  setToday("sale-date");
-  buildGrid();
-  buildSzRows();
-  setSzThisMonth();
+  setToday("record-date"); setToday("sale-date");
+  buildGrid(); buildSzRows(); setSzThisMonth();
   var d = new Date();
   document.getElementById("today-label").textContent = d.getFullYear()+"年"+(d.getMonth()+1)+"月の日別産卵記録";
-  loadWeather();
-  checkAndShowMilestoneBanner();
+  loadWeather(); checkAndShowMilestoneBanner();
 }
 
 function buildSzRows() {
-  var container = document.getElementById("sz-rows");
-  var html = "";
-  for (var i = 0; i < 2; i++) {
-    if (i > 0) html += '<div style="height:1px;background:#EAF5EA;margin:8px 0;"></div>';
-    html += '<div class="sz-item-wrap">' +
-      '<div style="margin-bottom:5px;"><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">資材名</div>' +
-      '<input class="sz-name" type="text" placeholder="例：配合飼料" data-sz="name"></div>' +
-      '<div style="display:flex;gap:6px;align-items:flex-end;">' +
-      '<div style="flex:1;"><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">数量</div><input class="sz-qty" type="number" placeholder="0" inputmode="numeric" data-sz="qty"></div>' +
-      '<div><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">単位</div><select class="sz-unit" data-sz="unit"><option>kg</option><option>g</option><option>袋</option><option>個</option><option>L</option><option>本</option><option>箱</option><option>枚</option><option>その他</option></select></div>' +
-      '<div style="flex:1.5;"><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">金額（円）</div><input class="sz-price" type="number" oninput="calcSzTotal()" placeholder="¥0" inputmode="numeric" data-sz="price"></div>' +
-      '</div></div>';
+  var c = document.getElementById("sz-rows"), html = "";
+  for (var i=0;i<2;i++) {
+    if(i>0) html+='<div style="height:1px;background:#EAF5EA;margin:8px 0;"></div>';
+    html+='<div class="sz-item-wrap"><div style="margin-bottom:5px;"><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">資材名</div><input class="sz-name" type="text" placeholder="例：配合飼料" data-sz="name"></div><div style="display:flex;gap:6px;align-items:flex-end;"><div style="flex:1;"><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">数量</div><input class="sz-qty" type="number" placeholder="0" inputmode="numeric" data-sz="qty"></div><div><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">単位</div><select class="sz-unit" data-sz="unit"><option>kg</option><option>g</option><option>袋</option><option>個</option><option>L</option><option>本</option><option>箱</option><option>枚</option><option>その他</option></select></div><div style="flex:1.5;"><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">金額（円）</div><input class="sz-price" type="number" oninput="calcSzTotal()" placeholder="¥0" inputmode="numeric" data-sz="price"></div></div></div>';
   }
-  container.innerHTML = html;
+  c.innerHTML = html;
+}
+function setSzThisMonth(){ var d=new Date(); document.getElementById("sz-month").value=d.getFullYear()+"-"+pad(d.getMonth()+1); }
+
+// ---- モード切替 ----
+function setMode(mode) {
+  document.getElementById("panel-manual").style.display = mode==='manual'?'block':'none';
+  document.getElementById("panel-voice").style.display  = mode==='voice' ?'block':'none';
+  document.getElementById("mode-manual").className = 'mode-btn'+(mode==='manual'?' on':'');
+  document.getElementById("mode-voice").className  = 'mode-btn'+(mode==='voice' ?' on':'');
+  if (mode==='manual') stopVoiceSession();
 }
 
-function setSzThisMonth() {
-  var d = new Date();
-  document.getElementById("sz-month").value = d.getFullYear() + "-" + pad(d.getMonth()+1);
-}
-
-// ============================================================
-// 天気予報（fetch版）
-// ============================================================
+// ---- 天気 ----
 function loadWeather() {
-  callGAS('getWeatherForecast')
-    .then(function(forecast) {
-      var el = document.getElementById("wx-forecast");
-      if (!forecast || !forecast.length) { el.innerHTML = '<div style="color:rgba(255,255,255,.7);font-size:12px;">取得失敗</div>'; return; }
-      var days = ["今日","明日","明後日"];
-      var html = "";
-      for (var i = 0; i < Math.min(3, forecast.length); i++) {
-        var f = forecast[i];
-        html += '<div style="flex:1;background:rgba(255,255,255,0.12);border-radius:10px;padding:6px 4px;text-align:center;">' +
-          '<div style="font-size:11px;color:rgba(255,255,255,.75);font-weight:700;">' + days[i] + '</div>' +
-          '<div style="font-size:22px;line-height:1.2;">' + f.emoji + '</div>' +
-          '<div style="font-size:10px;color:#fff;font-weight:700;">' + f.label + '</div>' +
-          '<div style="font-size:11px;color:rgba(255,255,255,.9);margin-top:2px;">' +
-            '<span style="color:#FFD700;">↑' + f.tempMax + '</span> <span style="color:#AEE4FF;">↓' + f.tempMin + '</span>' +
-          '</div>' +
-          '<div style="font-size:10px;color:rgba(255,255,255,.65);">🌧' + f.precip + 'mm</div></div>';
-      }
-      el.innerHTML = html;
-    })
-    .catch(function() {
-      document.getElementById("wx-forecast").innerHTML = '<div style="color:rgba(255,255,255,.7);font-size:12px;">天気取得失敗</div>';
-    });
+  callGAS('getWeatherForecast').then(function(forecast){
+    var el=document.getElementById("wx-forecast");
+    if(!forecast||!forecast.length){el.innerHTML='<div style="color:rgba(255,255,255,.7);font-size:12px;">取得失敗</div>';return;}
+    var days=["今日","明日","明後日"],html="";
+    for(var i=0;i<Math.min(3,forecast.length);i++){
+      var f=forecast[i];
+      html+='<div style="flex:1;background:rgba(255,255,255,0.12);border-radius:10px;padding:6px 4px;text-align:center;"><div style="font-size:11px;color:rgba(255,255,255,.75);font-weight:700;">'+days[i]+'</div><div style="font-size:22px;line-height:1.2;">'+f.emoji+'</div><div style="font-size:10px;color:#fff;font-weight:700;">'+f.label+'</div><div style="font-size:11px;color:rgba(255,255,255,.9);margin-top:2px;"><span style="color:#FFD700;">↑'+f.tempMax+'</span> <span style="color:#AEE4FF;">↓'+f.tempMin+'</span></div><div style="font-size:10px;color:rgba(255,255,255,.65);">🌧'+f.precip+'mm</div></div>';
+    }
+    el.innerHTML=html;
+  }).catch(function(){document.getElementById("wx-forecast").innerHTML='<div style="color:rgba(255,255,255,.7);font-size:12px;">天気取得失敗</div>';});
 }
 
-// ============================================================
-// ユーティリティ
-// ============================================================
-function setToday(id) {
-  var d = new Date();
-  document.getElementById(id).value = d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
-}
-function pad(n){ return String(n).padStart(2,"0"); }
+function setToday(id){var d=new Date();document.getElementById(id).value=d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function pad(n){return String(n).padStart(2,"0");}
 
-function buildGrid() {
-  var g = document.getElementById("room-grid");
-  g.innerHTML = "";
-  for (var i = 0; i < rooms.length; i++) {
-    (function(room, num) {
-      var b = document.createElement("button");
-      b.className = "rb";
-      b.id = "rb-" + room;
-      b.innerHTML = '<span class="rn">' + num + '</span><span class="rs">号舎</span>' +
-        '<span class="bdg" id="bd-' + room + '">0</span>';
-      b.addEventListener("click", function(){ pick(room); });
-      g.appendChild(b);
-    })(rooms[i], i+1);
+function buildGrid(){
+  var g=document.getElementById("room-grid"); g.innerHTML="";
+  for(var i=0;i<rooms.length;i++){
+    (function(room,num){
+      var b=document.createElement("button"); b.className="rb"; b.id="rb-"+room;
+      b.innerHTML='<span class="rn">'+num+'</span><span class="rs">号舎</span><span class="bdg" id="bd-'+room+'">0</span>';
+      b.addEventListener("click",function(){pick(room);}); g.appendChild(b);
+    })(rooms[i],i+1);
   }
 }
 
-function pick(room) {
-  sel = room;
-  for (var i = 0; i < rooms.length; i++) {
-    var btn = document.getElementById("rb-" + rooms[i]);
-    if (btn) { if (rooms[i] === room) btn.classList.add("on"); else btn.classList.remove("on"); }
-  }
-  document.getElementById("sel-badge").textContent = "🏠 " + room;
-  document.getElementById("form-area").style.display = "block";
-  document.getElementById("ne").value = 0;
-  document.getElementById("he").value = 0;
-  document.getElementById("ke").value = 0;
-  document.getElementById("memo").value = "";
+function pick(room){
+  sel=room;
+  for(var i=0;i<rooms.length;i++){var btn=document.getElementById("rb-"+rooms[i]);if(btn){if(rooms[i]===room)btn.classList.add("on");else btn.classList.remove("on");}}
+  document.getElementById("sel-badge").textContent="🏠 "+room;
+  document.getElementById("form-area").style.display="block";
+  document.getElementById("ne").value=0; document.getElementById("he").value=0; document.getElementById("ke").value=0; document.getElementById("memo").value="";
   loadFlockInfo(room);
-  setTimeout(function(){ document.getElementById("form-area").scrollIntoView({behavior:"smooth",block:"start"}); }, 100);
+  setTimeout(function(){document.getElementById("form-area").scrollIntoView({behavior:"smooth",block:"start"});},100);
 }
 
-// ============================================================
-// 産卵記録 保存（POST）
-// ============================================================
-function doSave() {
-  if (!sel) { toast("号舎を選んでね", "ng"); return; }
-  var btn = document.getElementById("sub-btn");
-  btn.disabled = true; btn.textContent = "保存中...";
-  var timer = setTimeout(function(){
-    btn.disabled = false; btn.textContent = "保存する";
-    toast("タイムアウト。GAS URLを確認してください", "ng");
-  }, 15000);
-  callGAS('saveRecord', {
-    date: document.getElementById("record-date").value, room: sel,
-    normalEggs: document.getElementById("ne").value, hibiEggs: document.getElementById("he").value,
-    kigaiEggs: document.getElementById("ke").value, feed: document.getElementById("feed").value,
-    grass: document.getElementById("grass").value, other: document.getElementById("other").value,
-    memo: document.getElementById("memo").value, recorder: document.getElementById("recorder").value
-  }, 'POST')
-  .then(function(r) {
-    clearTimeout(timer); btn.disabled = false; btn.textContent = "保存する";
-    toast("✅ " + r.message, "ok");
-    document.getElementById("ne").value = 0; document.getElementById("he").value = 0;
-    document.getElementById("ke").value = 0; document.getElementById("feed").value = "";
-    document.getElementById("grass").value = ""; document.getElementById("other").value = "";
-    document.getElementById("memo").value = ""; document.getElementById("recorder").value = "";
-  })
-  .catch(function(e) {
-    clearTimeout(timer); btn.disabled = false; btn.textContent = "保存する";
-    toast("❌ " + (e.message || "通信エラー"), "ng");
-  });
+function doSave(){
+  if(!sel){toast("号舎を選んでね","ng");return;}
+  var btn=document.getElementById("sub-btn"); btn.disabled=true; btn.textContent="保存中...";
+  var timer=setTimeout(function(){btn.disabled=false;btn.textContent="保存する";toast("タイムアウト。GAS URLを確認してください","ng");},15000);
+  callGAS('saveRecord',{date:document.getElementById("record-date").value,room:sel,normalEggs:document.getElementById("ne").value,hibiEggs:document.getElementById("he").value,kigaiEggs:document.getElementById("ke").value,feed:document.getElementById("feed").value,grass:document.getElementById("grass").value,other:document.getElementById("other").value,memo:document.getElementById("memo").value,recorder:document.getElementById("recorder").value},'POST')
+  .then(function(r){clearTimeout(timer);btn.disabled=false;btn.textContent="保存する";toast("✅ "+r.message,"ok");document.getElementById("ne").value=0;document.getElementById("he").value=0;document.getElementById("ke").value=0;document.getElementById("feed").value="";document.getElementById("grass").value="";document.getElementById("other").value="";document.getElementById("memo").value="";document.getElementById("recorder").value="";})
+  .catch(function(e){clearTimeout(timer);btn.disabled=false;btn.textContent="保存する";toast("❌ "+(e.message||"通信エラー"),"ng");});
 }
 
-// ============================================================
-// 販売
-// ============================================================
-function loadSaleBanner() {
-  document.getElementById("sale-banner-val").textContent = "取得中...";
-  callGAS('getMonthlySaleTotal')
-    .then(function(r) {
-      if (r && r.success !== false) {
-        document.getElementById("sale-banner-label").textContent = r.year + "年" + r.month + "月の販売合計";
-        document.getElementById("sale-banner-val").textContent = r.total.toLocaleString() + " 円 💴";
-      }
-    })
-    .catch(function() { document.getElementById("sale-banner-val").textContent = "取得失敗"; });
+function loadSaleBanner(){
+  document.getElementById("sale-banner-val").textContent="取得中...";
+  callGAS('getMonthlySaleTotal').then(function(r){if(r&&r.success!==false){document.getElementById("sale-banner-label").textContent=r.year+"年"+r.month+"月の販売合計";document.getElementById("sale-banner-val").textContent=r.total.toLocaleString()+" 円 💴";}}).catch(function(){document.getElementById("sale-banner-val").textContent="取得失敗";});
 }
 
-function doSaveSale() {
-  callGAS('saveSaleRecord', {
-    date: document.getElementById("sale-date").value, qty: document.getElementById("sq").value,
-    price: document.getElementById("sp").value, buyer: document.getElementById("sb").value,
-    channel: document.getElementById("sc").value, memo: document.getElementById("sm").value,
-    recorder: document.getElementById("sr").value
-  }, 'POST')
-  .then(function(r) {
-    toast("✅ " + r.message, "ok");
-    document.getElementById("sq").value = 0; document.getElementById("sp").value = "";
-    document.getElementById("sm").value = ""; loadSaleBanner();
-  })
-  .catch(function(e) { toast("❌ " + (e.message || "エラー"), "ng"); });
+function doSaveSale(){
+  callGAS('saveSaleRecord',{date:document.getElementById("sale-date").value,qty:document.getElementById("sq").value,price:document.getElementById("sp").value,buyer:document.getElementById("sb").value,channel:document.getElementById("sc").value,memo:document.getElementById("sm").value,recorder:document.getElementById("sr").value},'POST')
+  .then(function(r){toast("✅ "+r.message,"ok");document.getElementById("sq").value=0;document.getElementById("sp").value="";document.getElementById("sm").value="";loadSaleBanner();})
+  .catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});
 }
 
-// ============================================================
-// 当月日別記録
-// ============================================================
-function loadToday() {
-  document.getElementById("today-list").innerHTML = '<div class="ld">読み込み中...</div>';
-  document.getElementById("mn-banner").style.display = "none";
-  callGAS('getMonthlyDailyRecords')
-    .then(renderMonthlyDaily)
-    .catch(function() { document.getElementById("today-list").innerHTML = '<div class="em">読み込めませんでした</div>'; });
+function loadToday(){
+  document.getElementById("today-list").innerHTML='<div class="ld">読み込み中...</div>';
+  document.getElementById("mn-banner").style.display="none";
+  callGAS('getMonthlyDailyRecords').then(renderMonthlyDaily).catch(function(){document.getElementById("today-list").innerHTML='<div class="em">読み込めませんでした</div>';});
   callGAS('getTodayRecords').then(updateBadges).catch(function(){});
 }
 
-function renderMonthlyDaily(recs) {
-  var l = document.getElementById("today-list");
-  if (!recs || !recs.length) {
-    l.innerHTML = '<div class="em"><span class="ee">🥚</span>今月はまだ記録がないよ</div>';
-    document.getElementById("mn-banner").style.display = "none"; return;
-  }
-  var grandTotal = 0;
-  for (var i = 0; i < recs.length; i++) grandTotal += (recs[i].total || 0);
-  var avg = recs.length > 0 ? Math.round(grandTotal / recs.length * 10) / 10 : 0;
-  document.getElementById("mn-total").textContent = grandTotal;
-  document.getElementById("mn-avg").textContent = avg;
-  document.getElementById("mn-banner").style.display = "grid";
-  var html = "";
-  for (var i = 0; i < recs.length; i++) {
-    var r = recs[i];
-    html += '<div class="di" style="display:flex;justify-content:space-between;align-items:center;" onclick="openDayModal(\'' + r.dateStr + '\', \'' + r.label + '\')">' +
-      '<div><div class="dt">' + r.label + '</div>' +
-      '<div class="dd">普通 ' + r.normal + ' / ヒビ ' + r.hibi + ' / 規格外 ' + r.kigai + '</div>' +
-      (r.recorders && r.recorders.length ? '<div class="dd">👤 ' + r.recorders.join("・") + '</div>' : '') +
-      '</div><div style="text-align:right;"><div class="dv">' + r.total + '</div><div class="du">個 ›</div></div></div>';
-  }
-  l.innerHTML = html;
+function renderMonthlyDaily(recs){
+  var l=document.getElementById("today-list");
+  if(!recs||!recs.length){l.innerHTML='<div class="em"><span class="ee">🥚</span>今月はまだ記録がないよ</div>';document.getElementById("mn-banner").style.display="none";return;}
+  var grandTotal=0; for(var i=0;i<recs.length;i++) grandTotal+=(recs[i].total||0);
+  var avg=recs.length>0?Math.round(grandTotal/recs.length*10)/10:0;
+  document.getElementById("mn-total").textContent=grandTotal; document.getElementById("mn-avg").textContent=avg; document.getElementById("mn-banner").style.display="grid";
+  var html="";
+  for(var i=0;i<recs.length;i++){var r=recs[i];html+='<div class="di" style="display:flex;justify-content:space-between;align-items:center;" onclick="openDayModal(\''+r.dateStr+'\', \''+r.label+'\')"><div><div class="dt">'+r.label+'</div><div class="dd">普通 '+r.normal+' / ヒビ '+r.hibi+' / 規格外 '+r.kigai+'</div>'+(r.recorders&&r.recorders.length?'<div class="dd">👤 '+r.recorders.join("・")+'</div>':'')+'</div><div style="text-align:right;"><div class="dv">'+r.total+'</div><div class="du">個 ›</div></div></div>';}
+  l.innerHTML=html;
 }
 
-function updateBadges(recs) {
-  var c = {};
-  for (var i = 0; i < rooms.length; i++) c[rooms[i]] = 0;
-  if (recs) for (var j = 0; j < recs.length; j++) { if (c[recs[j].room] !== undefined) c[recs[j].room] += (recs[j].total || 0); }
-  for (var i = 0; i < rooms.length; i++) {
-    var el = document.getElementById("bd-" + rooms[i]);
-    if (!el) continue;
-    if (c[rooms[i]] > 0) { el.textContent = c[rooms[i]]; el.style.display = "flex"; } else { el.style.display = "none"; }
-  }
+function updateBadges(recs){
+  var c={}; for(var i=0;i<rooms.length;i++) c[rooms[i]]=0;
+  if(recs) for(var j=0;j<recs.length;j++){if(c[recs[j].room]!==undefined) c[recs[j].room]+=(recs[j].total||0);}
+  for(var i=0;i<rooms.length;i++){var el=document.getElementById("bd-"+rooms[i]);if(!el)continue;if(c[rooms[i]]>0){el.textContent=c[rooms[i]];el.style.display="flex";}else{el.style.display="none";}}
 }
+
+function loadSummary(){
+  document.getElementById("summary-content").innerHTML='<div class="ld">読み込み中...</div>';
+  callGAS('getMonthlySummary').then(function(s){
+    var keys=Object.keys(s);
+    if(!keys.length){document.getElementById("summary-content").innerHTML='<div class="em"><span class="ee">📊</span>データがまだないよ</div>';return;}
+    keys.sort().reverse();
+    var html='<div class="sw"><table class="st"><tr><th>月</th>';
+    for(var i=0;i<rooms.length;i++) html+='<th>'+rooms[i].replace("号舎","")+'舎</th>';
+    html+='<th>合計</th></tr>';
+    for(var k=0;k<keys.length;k++){var m=keys[k];var mParts=m.match(/(\d+)年(\d+)月/);var mYear=mParts?mParts[1]:"";var mMonth=mParts?mParts[2]:"";html+='<tr class="month-row" onclick="openMonthModal('+mYear+','+mMonth+',\''+m+'\')"><td>'+m+'</td>';for(var i=0;i<rooms.length;i++){var v=s[m][rooms[i]]||0;html+='<td>'+(v>0?v:'-')+'</td>';}html+='<td class="tot">'+(s[m]["合計"]||0)+'</td></tr>';}
+    html+='</table></div>';
+    document.getElementById("summary-content").innerHTML=html;
+  }).catch(function(){document.getElementById("summary-content").innerHTML='<div class="em">読み込めませんでした</div>';});
+}
+
+function sw(tab){
+  var tabs=["record","today","sale","summary"],btns=document.querySelectorAll(".tab");
+  for(var i=0;i<tabs.length;i++){btns[i].className="tab"+(tabs[i]===tab?" on":"");document.getElementById("pg-"+tabs[i]).className="pg"+(tabs[i]===tab?" on":"");}
+  if(tab==="today") loadToday();
+  if(tab==="sale") loadSaleBanner();
+  if(tab==="summary"){loadSummary();loadShizaiHistory();}
+  if(tab!=="record") stopVoiceSession();
+}
+
+function summarySw(tab){
+  document.getElementById("sp-egg").style.display=tab==="egg"?"block":"none";
+  document.getElementById("sp-shizai").style.display=tab==="shizai"?"block":"none";
+  document.getElementById("stab-egg").className="sub-tab"+(tab==="egg"?" on":"");
+  document.getElementById("stab-shizai").className="sub-tab"+(tab==="shizai"?" on":"");
+}
+
+function toast(msg,type){var t=document.getElementById("toast");t.textContent=msg;t.className="toast "+(type||"")+" show";setTimeout(function(){t.className="toast";},3500);}
+
+function toggleFlockPanel(){var panel=document.getElementById("flock-panel"),btn=document.getElementById("flock-toggle-btn"),open=panel.style.display==="none";panel.style.display=open?"block":"none";btn.textContent=open?"✕ 閉じる":"＋ 更新";if(open){setToday("fr-entry");setToday("fc-date");}}
+
+function fpSw(tab){
+  document.getElementById("fpp-entry").style.display=tab==="entry"?"block":"none";
+  document.getElementById("fpp-change").style.display=tab==="change"?"block":"none";
+  var eb=document.getElementById("fpb-entry"),cb=document.getElementById("fpb-change");
+  eb.style.background=tab==="entry"?"#2D6A2D":"#fff";eb.style.color=tab==="entry"?"#fff":"#2D6A2D";eb.style.borderColor=tab==="entry"?"#2D6A2D":"#C0DCC0";
+  cb.style.background=tab==="change"?"#C0392B":"#fff";cb.style.color=tab==="change"?"#fff":"#2D6A2D";cb.style.borderColor=tab==="change"?"#C0392B":"#C0DCC0";
+}
+
+function loadFlockInfo(room){
+  document.getElementById("flock-info").textContent="取得中...";
+  callGAS('getFlockInfo',{room:room}).then(function(d){
+    var el=document.getElementById("flock-info");
+    if(!d){el.textContent="入舎データなし";return;}
+    var ageColor=d.age<60?"#E67E22":d.age<120?"#2D6A2D":"#1A4A8A";
+    var html='<span style="background:'+ageColor+';color:#fff;padding:2px 9px;border-radius:12px;font-size:13px;margin-right:8px;">'+d.age+'日齢</span><span style="font-size:15px;">🐔 '+d.current+'羽</span>'+(d.breed?'<span style="font-size:12px;color:#5A8A5A;margin-left:8px;">'+d.breed+'</span>':'');
+    html+='<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #C0DCC0;display:flex;gap:6px;justify-content:flex-end;"><button onclick="toggleFlockDetail()" style="padding:5px 12px;background:#D0EAD0;color:#2D6A2D;border:1.5px solid #C0DCC0;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;">📋 内訳</button><button onclick="doResetFlock()" style="padding:5px 14px;background:#C0392B;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;">🔄 リセット</button></div><div id="flock-detail-box" style="display:none;margin-top:8px;padding:10px;background:#F6FAF0;border:1px solid #C0DCC0;border-radius:10px;"></div>';
+    el.innerHTML=html;
+  }).catch(function(){document.getElementById("flock-info").textContent="取得失敗";});
+}
+
+function toggleFlockDetail(){var box=document.getElementById("flock-detail-box");if(!box)return;if(box.style.display==="none"){box.style.display="block";box.innerHTML='<div style="font-size:12px;color:#5A8A5A;">読み込み中...</div>';callGAS('getFlockDetail',{room:sel}).then(renderFlockDetail).catch(function(){box.innerHTML='<div style="font-size:12px;color:#C0392B;">取得失敗</div>';});}else{box.style.display="none";}}
+
+function renderFlockDetail(res){
+  var box=document.getElementById("flock-detail-box");if(!box)return;
+  if(!res||!res.success||!res.main){box.innerHTML='<div style="font-size:12px;color:#5A8A5A;">データなし</div>';return;}
+  var m=res.main,addSum=0;
+  for(var i=0;i<res.additions.length;i++) addSum+=Number(res.additions[i].count)||0;
+  var mainCount=Math.max(0,m.current-addSum);
+  var html='<div style="font-size:12px;color:#5A8A5A;font-weight:800;margin-bottom:6px;">🏠 '+sel+' の内訳</div>';
+  html+='<div style="background:#fff;border-radius:8px;padding:8px 10px;margin-bottom:6px;"><div style="font-size:11px;color:#5A8A5A;">メイン群れ</div><div style="font-size:13px;color:#1A4A1A;font-weight:700;">'+(m.breed||"品種未登録")+' / '+m.age+'日齢 / '+mainCount+'羽</div><div style="font-size:10px;color:#5A8A5A;margin-top:2px;">入舎日: '+m.entryDate+'</div></div>';
+  if(res.additions.length){for(var j=0;j<res.additions.length;j++){var a=res.additions[j];html+='<div style="background:#fff;border-radius:8px;padding:8px 10px;margin-bottom:6px;border-left:3px solid #E67E22;"><div style="font-size:11px;color:#5A8A5A;">追加 '+(j+1)+'</div><div style="font-size:13px;color:#1A4A1A;font-weight:700;">'+a.count+'羽'+(a.memo?'<span style="font-size:11px;font-weight:normal;color:#5A8A5A;"> / '+a.memo+'</span>':'')+'</div><div style="font-size:10px;color:#5A8A5A;margin-top:2px;">追加日: '+a.date+(a.recorder?' / 👤'+a.recorder:'')+'</div></div>';}}
+  html+='<div style="font-size:12px;font-weight:800;color:#2D6A2D;text-align:right;margin-top:6px;">合計: '+m.current+'羽</div>';
+  box.innerHTML=html;
+}
+
+function doSaveFlock(){
+  var entry=document.getElementById("fr-entry").value,count=document.getElementById("fr-count").value;
+  if(!entry||!count||count<=0){toast("入舎日・羽数は必須です","ng");return;}
+  callGAS('saveFlockEntry',{room:sel,entryDate:entry,ageAtEntry:document.getElementById("fr-age").value,count:count,breed:document.getElementById("fr-breed").value,recorder:document.getElementById("fr-rec").value},'POST')
+  .then(function(r){toast("✅ "+r.message,"ok");document.getElementById("flock-panel").style.display="none";document.getElementById("flock-toggle-btn").textContent="＋ 更新";loadFlockInfo(sel);})
+  .catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});
+}
+
+function doSaveFlockChange(){
+  var type=document.getElementById("fc-type").value,count=document.getElementById("fc-count").value;
+  if(!type||!count||count<=0){toast("種別・羽数を入力してください","ng");return;}
+  callGAS('saveFlockChange',{date:document.getElementById("fc-date").value,room:sel,type:type,count:count,memo:document.getElementById("fc-memo").value,recorder:document.getElementById("fc-rec").value,sourceRoom:document.getElementById("fc-source").value,addBreed:document.getElementById("fc-add-breed").value,addAge:document.getElementById("fc-add-age").value},'POST')
+  .then(function(r){toast("✅ "+r.message,"ok");document.getElementById("fc-count").value=0;document.getElementById("fc-memo").value="";document.getElementById("fc-add-breed").value="";document.getElementById("fc-add-age").value=0;document.getElementById("fc-source").value="";loadFlockInfo(sel);})
+  .catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});
+}
+
+function toggleAddFields(){var type=document.getElementById("fc-type").value||"",isAdd=type.indexOf("追加")!==-1;document.getElementById("fc-add-fields").style.display=isAdd?"block":"none";document.getElementById("fc-count-label").textContent=isAdd?"羽数（追加分）":"羽数（減少分）";var btn=document.getElementById("fc-save-btn");if(btn)btn.style.background=isAdd?"#2D6A2D":"#C0392B";}
+
+function doResetFlock(){if(!sel){toast("号舎を選んでね","ng");return;}if(!confirm(sel+"の鶏舎情報をリセットしますか？"))return;callGAS('resetFlock',{room:sel,recorder:''},'POST').then(function(r){toast("✅ "+r.message,"ok");loadFlockInfo(sel);}).catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});}
+
+function calcSzTotal(){var total=0;document.querySelectorAll(".sz-price").forEach(function(el){total+=Number(el.value)||0;});document.getElementById("sz-live-total").textContent="合計 ¥"+total.toLocaleString();}
+
+function doSaveShizai(){
+  var rows=document.querySelectorAll("#sz-rows .sz-item-wrap"),items=[];
+  for(var i=0;i<rows.length;i++){items.push({name:rows[i].querySelector('[data-sz="name"]').value,qty:rows[i].querySelector('[data-sz="qty"]').value,unit:rows[i].querySelector('[data-sz="unit"]').value,price:rows[i].querySelector('[data-sz="price"]').value});}
+  var parts=document.getElementById("sz-month").value.split("-"),monthLabel=parts[0]+"年"+parseInt(parts[1])+"月";
+  callGAS('saveShizaiRecord',{month:monthLabel,items:items,recorder:document.getElementById("sz-recorder").value},'POST')
+  .then(function(r){toast("✅ "+r.message,"ok");document.querySelectorAll("#sz-rows .sz-name").forEach(function(e){e.value="";});document.querySelectorAll("#sz-rows .sz-qty").forEach(function(e){e.value="";});document.querySelectorAll("#sz-rows .sz-price").forEach(function(e){e.value="";});calcSzTotal();loadShizaiHistory();})
+  .catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});
+}
+
+function loadShizaiHistory(){document.getElementById("shizai-history").innerHTML='<div class="ld">読み込み中...</div>';callGAS('getShizaiSummary').then(renderShizaiHistory).catch(function(){document.getElementById("shizai-history").innerHTML='<div class="em">読み込めませんでした</div>';});}
+
+function renderShizaiHistory(data){
+  var el=document.getElementById("shizai-history");
+  if(!data||!data.length){el.innerHTML='<div class="em"><span class="ee">📦</span>まだ記録がないよ</div>';return;}
+  var html="";
+  for(var i=0;i<data.length;i++){var m=data[i];html+='<div class="sz-month"><div class="sz-month-h"><span>'+m.month+'</span><span>合計 '+m.total.toLocaleString()+' 円</span></div><div class="sz-month-body">';for(var j=0;j<m.items.length;j++){var it=m.items[j];var dl=it.recordedDate?'<div style="font-size:10px;color:#5A8A5A;margin-bottom:2px;">📅 '+it.recordedDate+'</div>':'';html+='<div class="sz-item" style="flex-direction:column;align-items:stretch;padding:8px 0;">'+dl+'<div style="display:flex;justify-content:space-between;align-items:center;"><span>'+it.name+'　'+it.qty+it.unit+'</span><span style="color:#2D6A2D;font-weight:700;">'+it.price.toLocaleString()+' 円</span></div></div>';}html+='<div class="sz-total">合計 '+m.total.toLocaleString()+' 円</div></div></div>';}
+  el.innerHTML=html;
+}
+
+function openMonthModal(year,month,monthLabel){document.getElementById("month-modal-title").textContent="📅 "+monthLabel+" の日別記録";document.getElementById("month-modal-body").innerHTML='<div class="ld">読み込み中...</div>';document.getElementById("month-modal").classList.add("open");document.body.style.overflow="hidden";callGAS('getMonthlyDailyByYearMonth',{year:year,month:month}).then(renderMonthModal).catch(function(){document.getElementById("month-modal-body").innerHTML='<div class="em">読み込みエラー</div>';});}
+function closeMonthModal(e){if(e.target===document.getElementById("month-modal"))closeMonthModalBtn();}
+function closeMonthModalBtn(){document.getElementById("month-modal").classList.remove("open");document.body.style.overflow="";}
+
+function renderMonthModal(res){
+  var body=document.getElementById("month-modal-body");
+  if(!res||!res.success){body.innerHTML='<div class="em">読み込みエラー</div>';return;}
+  if(!res.records||!res.records.length){body.innerHTML='<div class="em"><span class="ee">🥚</span>この月の記録はまだないよ</div>';return;}
+  var html='<div class="month-modal-inner"><div class="month-banner"><div class="month-card-g"><div class="mc-lb">📦 当月合計</div><div class="mc-vl">'+res.grandTotal+'</div><div class="mc-un">個</div></div><div class="month-card-w"><div class="mc-lb">📅 1日平均</div><div class="mc-vl">'+res.avg+'</div><div class="mc-un">個/日</div></div></div>';
+  for(var i=0;i<res.records.length;i++){var r=res.records[i];html+='<div class="di" style="display:flex;justify-content:space-between;align-items:center;" onclick="openDayModalFromMonth(\''+r.dateStr+'\', \''+r.label+'\')"><div><div class="dt">'+r.label+'</div><div class="dd">普通 '+r.normal+' / ヒビ '+r.hibi+' / 規格外 '+r.kigai+'</div>'+(r.recorders&&r.recorders.length?'<div class="dd">👤 '+r.recorders.join("・")+'</div>':'')+'</div><div style="text-align:right;"><div class="dv">'+r.total+'</div><div class="du">個 ›</div></div></div>';}
+  html+='</div>'; body.innerHTML=html;
+}
+
+function openDayModalFromMonth(dateStr,label){document.getElementById("month-modal-sheet").style.display="none";document.getElementById("day-modal-title").textContent="📅 "+label+" の記録";document.getElementById("day-modal-body").innerHTML='<div class="ld">読み込み中...</div>';document.getElementById("day-modal").classList.add("open");callGAS('getDayDetail',{dateStr:dateStr}).then(renderDayDetail).catch(function(){document.getElementById("day-modal-body").innerHTML='<div class="em">読み込みエラー</div>';});}
+
+function openDayModal(dateStr,label){document.getElementById("day-modal-title").textContent="📅 "+label+" の記録";document.getElementById("day-modal-body").innerHTML='<div class="ld">読み込み中...</div>';document.getElementById("day-modal").classList.add("open");document.body.style.overflow="hidden";callGAS('getDayDetail',{dateStr:dateStr}).then(renderDayDetail).catch(function(){document.getElementById("day-modal-body").innerHTML='<div class="em">読み込みエラー</div>';});}
+function closeDayModal(e){if(e.target===document.getElementById("day-modal"))closeDayModalBtn();}
+function closeDayModalBtn(){document.getElementById("day-modal").classList.remove("open");var ms=document.getElementById("month-modal-sheet");if(ms&&ms.style.display==="none")ms.style.display="";else document.body.style.overflow="";}
+
+function renderDayDetail(res){
+  var body=document.getElementById("day-modal-body");
+  if(!res||!res.success||!res.records.length){body.innerHTML='<div class="em">記録が見つかりません</div>';return;}
+  var html='<p style="font-size:11px;color:#5A8A5A;padding:8px 16px 0;">号舎をタップして数値を修正→「保存」で確定</p>';
+  for(var i=0;i<res.records.length;i++){var r=res.records[i];html+='<div class="rec-card"><div class="rec-card-h"><span>🏠 '+r.room+'</span><span class="rc-total" id="rt-'+r.rowIndex+'">'+r.total+' 個</span></div><div class="rec-card-body"><div class="rec-row"><label>普通卵</label><input class="rec-input" type="number" inputmode="numeric" id="rn-'+r.rowIndex+'" value="'+r.normalEggs+'" onchange="updateRecTotal('+r.rowIndex+')"></div><div class="rec-row"><label>ヒビ</label><input class="rec-input" type="number" inputmode="numeric" id="rh-'+r.rowIndex+'" value="'+r.hibiEggs+'" onchange="updateRecTotal('+r.rowIndex+')"></div><div class="rec-row"><label>規格外</label><input class="rec-input" type="number" inputmode="numeric" id="rk-'+r.rowIndex+'" value="'+r.kigaiEggs+'" onchange="updateRecTotal('+r.rowIndex+')"></div><div class="rec-row"><label>配合飼料</label><input class="rec-input" type="text" id="rf-'+r.rowIndex+'" value="'+r.feed+'"></div><div class="rec-row"><label>草・野菜</label><input class="rec-input" type="text" id="rg-'+r.rowIndex+'" value="'+r.grass+'"></div><div class="rec-row"><label>その他</label><input class="rec-input" type="text" id="ro-'+r.rowIndex+'" value="'+r.other+'"></div><div class="rec-row"><label>メモ</label><input class="rec-input" type="text" id="rm-'+r.rowIndex+'" value="'+r.memo+'"></div></div><button class="rec-save-btn" onclick="saveRecEdit('+r.rowIndex+', \''+r.room+'\')">✅ '+r.room+' を保存</button></div>';}
+  body.innerHTML=html;
+}
+
+function updateRecTotal(rowIndex){var n=Number(document.getElementById("rn-"+rowIndex).value)||0,h=Number(document.getElementById("rh-"+rowIndex).value)||0,k=Number(document.getElementById("rk-"+rowIndex).value)||0,el=document.getElementById("rt-"+rowIndex);if(el)el.textContent=(n+h+k)+" 個";}
+
+function saveRecEdit(rowIndex,room){
+  callGAS('updateEggRecord',{rowIndex:rowIndex,normalEggs:document.getElementById("rn-"+rowIndex).value,hibiEggs:document.getElementById("rh-"+rowIndex).value,kigaiEggs:document.getElementById("rk-"+rowIndex).value,feed:document.getElementById("rf-"+rowIndex).value,grass:document.getElementById("rg-"+rowIndex).value,other:document.getElementById("ro-"+rowIndex).value,memo:document.getElementById("rm-"+rowIndex).value},'POST')
+  .then(function(r){toast("✅ "+r.message,"ok");var el=document.getElementById("rt-"+rowIndex);if(el)el.textContent=r.total+" 個";loadToday();})
+  .catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});
+}
+
+var MILESTONES=[6000,7777,10000];
+function checkAndShowMilestoneBanner(){callGAS('getMonthlyDailyRecords').then(function(recs){var m=calcMilestone(recs),b=document.getElementById('milestone-banner');if(m){b.textContent='🥚 祝 '+m.toLocaleString()+'個達成！ 🎉';b.style.display='block';}else{b.style.display='none';}}).catch(function(){});}
+function calcMilestone(recs){if(!recs||!recs.length)return null;var sorted=recs.slice().sort(function(a,b){return a.dateStr<b.dateStr?-1:1;}),running=0,lm=null,lmd=null;for(var i=0;i<sorted.length;i++){var prev=running;running+=sorted[i].total||0;for(var j=0;j<MILESTONES.length;j++){if(prev<MILESTONES[j]&&running>=MILESTONES[j]){lm=MILESTONES[j];lmd=sorted[i].dateStr;}}}if(!lm)return null;var today=new Date(),ts=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');return lmd===ts?lm:null;}
 
 // ============================================================
-// 月次集計
+// 音声セッション
 // ============================================================
-function loadSummary() {
-  document.getElementById("summary-content").innerHTML = '<div class="ld">読み込み中...</div>';
-  callGAS('getMonthlySummary')
-    .then(function(s) {
-      var keys = Object.keys(s);
-      if (!keys.length) { document.getElementById("summary-content").innerHTML = '<div class="em"><span class="ee">📊</span>データがまだないよ</div>'; return; }
-      keys.sort().reverse();
-      var html = '<div class="sw"><table class="st"><tr><th>月</th>';
-      for (var i = 0; i < rooms.length; i++) html += '<th>' + rooms[i].replace("号舎","") + '舎</th>';
-      html += '<th>合計</th></tr>';
-      for (var k = 0; k < keys.length; k++) {
-        var m = keys[k];
-        var mParts = m.match(/(\d+)年(\d+)月/);
-        var mYear = mParts ? mParts[1] : ""; var mMonth = mParts ? mParts[2] : "";
-        html += '<tr class="month-row" onclick="openMonthModal(' + mYear + ',' + mMonth + ',\'' + m + '\')">';
-        html += '<td>' + m + '</td>';
-        for (var i = 0; i < rooms.length; i++) { var v = s[m][rooms[i]] || 0; html += '<td>' + (v > 0 ? v : '-') + '</td>'; }
-        html += '<td class="tot">' + (s[m]["合計"] || 0) + '</td></tr>';
-      }
-      html += '</table></div>';
-      document.getElementById("summary-content").innerHTML = html;
-    })
-    .catch(function() { document.getElementById("summary-content").innerHTML = '<div class="em">読み込めませんでした</div>'; });
+var vsActive = false;
+var vsRec    = null;
+var vsData   = {};   // { "1号舎": { normal, hibi, kigai } }
+var vsOrder  = [];   // 記録順
+
+var NUM_MAP = {"〇":"0","一":"1","二":"2","三":"3","四":"4","五":"5","六":"6","七":"7","八":"8","九":"9","０":"0","１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9"};
+function normalizeNum(str){ return str.replace(/[〇一二三四五六七八九０-９]/g,function(c){return NUM_MAP[c]||c;}); }
+
+function toggleVoiceSession(){ vsActive ? stopVoiceSession() : startVoiceSession(); }
+
+function startVoiceSession(){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){toast("このブラウザは音声入力非対応です","ng");return;}
+  vsActive=true; updateVsUI(); vsListen();
 }
 
-// ============================================================
-// タブ切替
-// ============================================================
-function sw(tab) {
-  var tabs = ["record","today","sale","summary"];
-  var btns = document.querySelectorAll(".tab");
-  for (var i = 0; i < tabs.length; i++) {
-    btns[i].className = "tab" + (tabs[i] === tab ? " on" : "");
-    document.getElementById("pg-" + tabs[i]).className = "pg" + (tabs[i] === tab ? " on" : "");
-  }
-  if (tab === "today") loadToday();
-  if (tab === "sale") loadSaleBanner();
-  if (tab === "summary") { loadSummary(); loadShizaiHistory(); }
+function vsListen(){
+  if(!vsActive) return;
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  vsRec=new SR(); vsRec.lang='ja-JP'; vsRec.interimResults=false; vsRec.maxAlternatives=1;
+  vsRec.onresult=function(e){
+    var text=normalizeNum(e.results[0][0].transcript);
+    var el=document.getElementById("vs-transcript"); el.textContent="「"+text+"」"; el.className="vs-transcript active";
+    handleVsInput(text);
+  };
+  vsRec.onerror=function(e){
+    if(e.error==="not-allowed"){toast("マイクの使用が許可されていません","ng");stopVoiceSession();}
+    // no-speech等は無視して再起動
+  };
+  vsRec.onend=function(){ if(vsActive) setTimeout(vsListen,200); };
+  vsRec.start();
 }
 
-function summarySw(tab) {
-  document.getElementById("sp-egg").style.display = tab === "egg" ? "block" : "none";
-  document.getElementById("sp-shizai").style.display = tab === "shizai" ? "block" : "none";
-  document.getElementById("stab-egg").className = "sub-tab" + (tab === "egg" ? " on" : "");
-  document.getElementById("stab-shizai").className = "sub-tab" + (tab === "shizai" ? " on" : "");
+function stopVoiceSession(){
+  vsActive=false;
+  if(vsRec){try{vsRec.stop();}catch(e){}vsRec=null;}
+  updateVsUI();
 }
 
-function toast(msg, type) {
-  var t = document.getElementById("toast");
-  t.textContent = msg; t.className = "toast " + (type || "") + " show";
-  setTimeout(function(){ t.className = "toast"; }, 3000);
-}
-
-// ============================================================
-// 鶏舎管理
-// ============================================================
-function toggleFlockPanel() {
-  var panel = document.getElementById("flock-panel");
-  var btn = document.getElementById("flock-toggle-btn");
-  var open = panel.style.display === "none";
-  panel.style.display = open ? "block" : "none";
-  btn.textContent = open ? "✕ 閉じる" : "＋ 更新";
-  if (open) { setToday("fr-entry"); setToday("fc-date"); }
-}
-
-function fpSw(tab) {
-  document.getElementById("fpp-entry").style.display = tab === "entry" ? "block" : "none";
-  document.getElementById("fpp-change").style.display = tab === "change" ? "block" : "none";
-  var eb = document.getElementById("fpb-entry"); var cb = document.getElementById("fpb-change");
-  eb.style.background = tab === "entry" ? "#2D6A2D" : "#fff";
-  eb.style.color = tab === "entry" ? "#fff" : "#2D6A2D";
-  eb.style.borderColor = tab === "entry" ? "#2D6A2D" : "#C0DCC0";
-  cb.style.background = tab === "change" ? "#C0392B" : "#fff";
-  cb.style.color = tab === "change" ? "#fff" : "#2D6A2D";
-  cb.style.borderColor = tab === "change" ? "#C0392B" : "#C0DCC0";
-}
-
-function loadFlockInfo(room) {
-  document.getElementById("flock-info").textContent = "取得中...";
-  callGAS('getFlockInfo', { room: room })
-    .then(function(d) {
-      var el = document.getElementById("flock-info");
-      if (!d) { el.textContent = "入舎データなし"; return; }
-      var ageColor = d.age < 60 ? "#E67E22" : d.age < 120 ? "#2D6A2D" : "#1A4A8A";
-      var html = '<span style="background:' + ageColor + ';color:#fff;padding:2px 9px;border-radius:12px;font-size:13px;margin-right:8px;">' + d.age + '日齢</span>' +
-        '<span style="font-size:15px;">🐔 ' + d.current + '羽</span>' +
-        (d.breed ? '<span style="font-size:12px;color:#5A8A5A;margin-left:8px;">' + d.breed + '</span>' : '');
-      html += '<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #C0DCC0;display:flex;gap:6px;justify-content:flex-end;">' +
-        '<button onclick="toggleFlockDetail()" style="padding:5px 12px;background:#D0EAD0;color:#2D6A2D;border:1.5px solid #C0DCC0;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;">📋 内訳</button>' +
-        '<button onclick="doResetFlock()" style="padding:5px 14px;background:#C0392B;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;">🔄 リセット</button></div>' +
-        '<div id="flock-detail-box" style="display:none;margin-top:8px;padding:10px;background:#F6FAF0;border:1px solid #C0DCC0;border-radius:10px;"></div>';
-      el.innerHTML = html;
-    })
-    .catch(function() { document.getElementById("flock-info").textContent = "取得失敗"; });
-}
-
-function toggleFlockDetail() {
-  var box = document.getElementById("flock-detail-box");
-  if (!box) return;
-  if (box.style.display === "none") {
-    box.style.display = "block";
-    box.innerHTML = '<div style="font-size:12px;color:#5A8A5A;">読み込み中...</div>';
-    callGAS('getFlockDetail', { room: sel }).then(renderFlockDetail)
-      .catch(function() { box.innerHTML = '<div style="font-size:12px;color:#C0392B;">取得失敗</div>'; });
+function updateVsUI(){
+  var s=document.getElementById("vs-status"),b=document.getElementById("vs-btn-start");
+  if(vsActive){
+    s.textContent="🔴 録音中 — 「◯号舎 普通◯個 記録終了」と話してください";
+    s.className="vs-status listening"; b.textContent="⏹ 録音停止"; b.classList.add("active");
   } else {
-    box.style.display = "none";
+    s.textContent="⏹ 停止中 — 「音声記録開始」を押してください";
+    s.className="vs-status"; b.textContent="🎤 音声記録開始"; b.classList.remove("active");
   }
 }
 
-function renderFlockDetail(res) {
-  var box = document.getElementById("flock-detail-box");
-  if (!box) return;
-  if (!res || !res.success || !res.main) { box.innerHTML = '<div style="font-size:12px;color:#5A8A5A;">データなし</div>'; return; }
-  var m = res.main;
-  var addSum = 0;
-  for (var i = 0; i < res.additions.length; i++) addSum += Number(res.additions[i].count) || 0;
-  var mainCount = Math.max(0, m.current - addSum);
-  var html = '<div style="font-size:12px;color:#5A8A5A;font-weight:800;margin-bottom:6px;">🏠 ' + sel + ' の内訳</div>';
-  html += '<div style="background:#fff;border-radius:8px;padding:8px 10px;margin-bottom:6px;">' +
-    '<div style="font-size:11px;color:#5A8A5A;">メイン群れ</div>' +
-    '<div style="font-size:13px;color:#1A4A1A;font-weight:700;">' + (m.breed || "品種未登録") + ' / ' + m.age + '日齢 / ' + mainCount + '羽</div>' +
-    '<div style="font-size:10px;color:#5A8A5A;margin-top:2px;">入舎日: ' + m.entryDate + '</div></div>';
-  if (res.additions.length) {
-    for (var j = 0; j < res.additions.length; j++) {
-      var a = res.additions[j];
-      html += '<div style="background:#fff;border-radius:8px;padding:8px 10px;margin-bottom:6px;border-left:3px solid #E67E22;">' +
-        '<div style="font-size:11px;color:#5A8A5A;">追加 ' + (j+1) + '</div>' +
-        '<div style="font-size:13px;color:#1A4A1A;font-weight:700;">' + a.count + '羽' +
-          (a.memo ? '<span style="font-size:11px;font-weight:normal;color:#5A8A5A;"> / ' + a.memo + '</span>' : '') + '</div>' +
-        '<div style="font-size:10px;color:#5A8A5A;margin-top:2px;">追加日: ' + a.date + (a.recorder ? ' / 👤' + a.recorder : '') + '</div></div>';
-    }
+function handleVsInput(text){
+  // セッション終了
+  if(text.match(/セッション終了|全部終了|全体終了/)){
+    stopVoiceSession(); toast("✅ セッション終了。内容を確認して保存してください","ok"); return;
   }
-  html += '<div style="font-size:12px;font-weight:800;color:#2D6A2D;text-align:right;margin-top:6px;">合計: ' + m.current + '羽</div>';
-  box.innerHTML = html;
-}
-
-function doSaveFlock() {
-  var entry = document.getElementById("fr-entry").value;
-  var count = document.getElementById("fr-count").value;
-  if (!entry || !count || count <= 0) { toast("入舎日・羽数は必須です", "ng"); return; }
-  callGAS('saveFlockEntry', {
-    room: sel, entryDate: entry, ageAtEntry: document.getElementById("fr-age").value,
-    count: count, breed: document.getElementById("fr-breed").value, recorder: document.getElementById("fr-rec").value
-  }, 'POST')
-  .then(function(r) {
-    toast("✅ " + r.message, "ok");
-    document.getElementById("flock-panel").style.display = "none";
-    document.getElementById("flock-toggle-btn").textContent = "＋ 更新";
-    loadFlockInfo(sel);
-  })
-  .catch(function(e) { toast("❌ " + (e.message || "エラー"), "ng"); });
-}
-
-function doSaveFlockChange() {
-  var type = document.getElementById("fc-type").value;
-  var count = document.getElementById("fc-count").value;
-  if (!type || !count || count <= 0) { toast("種別・羽数を入力してください", "ng"); return; }
-  callGAS('saveFlockChange', {
-    date: document.getElementById("fc-date").value, room: sel, type: type, count: count,
-    memo: document.getElementById("fc-memo").value, recorder: document.getElementById("fc-rec").value,
-    sourceRoom: document.getElementById("fc-source").value,
-    addBreed: document.getElementById("fc-add-breed").value,
-    addAge: document.getElementById("fc-add-age").value
-  }, 'POST')
-  .then(function(r) {
-    toast("✅ " + r.message, "ok");
-    document.getElementById("fc-count").value = 0; document.getElementById("fc-memo").value = "";
-    document.getElementById("fc-add-breed").value = ""; document.getElementById("fc-add-age").value = 0;
-    document.getElementById("fc-source").value = "";
-    loadFlockInfo(sel);
-  })
-  .catch(function(e) { toast("❌ " + (e.message || "エラー"), "ng"); });
-}
-
-function toggleAddFields() {
-  var type = document.getElementById("fc-type").value || "";
-  var isAdd = type.indexOf("追加") !== -1;
-  document.getElementById("fc-add-fields").style.display = isAdd ? "block" : "none";
-  document.getElementById("fc-count-label").textContent = isAdd ? "羽数（追加分）" : "羽数（減少分）";
-  var btn = document.getElementById("fc-save-btn");
-  if (btn) btn.style.background = isAdd ? "#2D6A2D" : "#C0392B";
-}
-
-function doResetFlock() {
-  if (!sel) { toast("号舎を選んでね", "ng"); return; }
-  if (!confirm(sel + "の鶏舎情報をリセットしますか？")) return;
-  callGAS('resetFlock', { room: sel, recorder: '' }, 'POST')
-    .then(function(r) { toast("✅ " + r.message, "ok"); loadFlockInfo(sel); })
-    .catch(function(e) { toast("❌ " + (e.message || "エラー"), "ng"); });
-}
-
-// ============================================================
-// 資材コスト
-// ============================================================
-function calcSzTotal() {
-  var total = 0;
-  document.querySelectorAll(".sz-price").forEach(function(el) { total += Number(el.value) || 0; });
-  document.getElementById("sz-live-total").textContent = "合計 ¥" + total.toLocaleString();
-}
-
-function doSaveShizai() {
-  var rows = document.querySelectorAll("#sz-rows .sz-item-wrap");
-  var items = [];
-  for (var i = 0; i < rows.length; i++) {
-    items.push({
-      name: rows[i].querySelector('[data-sz="name"]').value,
-      qty: rows[i].querySelector('[data-sz="qty"]').value,
-      unit: rows[i].querySelector('[data-sz="unit"]').value,
-      price: rows[i].querySelector('[data-sz="price"]').value
-    });
+  // 号舎 + 記録終了
+  if(text.match(/記録終了|きろくしゅうりょう/)){
+    var parsed=parseVsText(text);
+    if(!parsed.room){ toast("❌ 号舎が聞き取れませんでした。もう一度話してください","ng"); return; }
+    commitVsRecord(parsed); return;
   }
-  var parts = document.getElementById("sz-month").value.split("-");
-  var monthLabel = parts[0] + "年" + parseInt(parts[1]) + "月";
-  // itemsはcallGAS内でJSON.stringifyされる
-  callGAS('saveShizaiRecord', { month: monthLabel, items: items, recorder: document.getElementById("sz-recorder").value }, 'POST')
-    .then(function(r) {
-      toast("✅ " + r.message, "ok");
-      document.querySelectorAll("#sz-rows .sz-name").forEach(function(e){ e.value=""; });
-      document.querySelectorAll("#sz-rows .sz-qty").forEach(function(e){ e.value=""; });
-      document.querySelectorAll("#sz-rows .sz-price").forEach(function(e){ e.value=""; });
-      calcSzTotal(); loadShizaiHistory();
-    })
-    .catch(function(e) { toast("❌ " + (e.message || "エラー"), "ng"); });
+  // キーワードなし → トランスクリプト表示のみ、次の発話を待つ
 }
 
-function loadShizaiHistory() {
-  document.getElementById("shizai-history").innerHTML = '<div class="ld">読み込み中...</div>';
-  callGAS('getShizaiSummary').then(renderShizaiHistory)
-    .catch(function() { document.getElementById("shizai-history").innerHTML = '<div class="em">読み込めませんでした</div>'; });
+function parseVsText(text){
+  var result={room:null,normal:0,hibi:0,kigai:0};
+  var rm=text.match(/([1-9])\s*号舎/); if(rm) result.room=rm[1]+"号舎";
+  var nm=text.match(/普通[^\d]*(\d+)/); if(nm) result.normal=parseInt(nm[1]);
+  var hm=text.match(/(?:ひび|ヒビ|亀裂)[^\d]*(\d+)/i); if(hm) result.hibi=parseInt(hm[1]);
+  var km=text.match(/規格外[^\d]*(\d+)/); if(km) result.kigai=parseInt(km[1]);
+  return result;
 }
 
-function renderShizaiHistory(data) {
-  var el = document.getElementById("shizai-history");
-  if (!data || !data.length) { el.innerHTML = '<div class="em"><span class="ee">📦</span>まだ記録がないよ</div>'; return; }
-  var html = "";
-  for (var i = 0; i < data.length; i++) {
-    var m = data[i];
-    html += '<div class="sz-month"><div class="sz-month-h"><span>' + m.month + '</span><span>合計 ' + m.total.toLocaleString() + ' 円</span></div><div class="sz-month-body">';
-    for (var j = 0; j < m.items.length; j++) {
-      var it = m.items[j];
-      var dateLine = it.recordedDate ? '<div style="font-size:10px;color:#5A8A5A;margin-bottom:2px;">📅 ' + it.recordedDate + '</div>' : '';
-      html += '<div class="sz-item" style="flex-direction:column;align-items:stretch;padding:8px 0;">' + dateLine +
-        '<div style="display:flex;justify-content:space-between;align-items:center;">' +
-          '<span>' + it.name + '　' + it.qty + it.unit + '</span>' +
-          '<span style="color:#2D6A2D;font-weight:700;">' + it.price.toLocaleString() + ' 円</span>' +
-        '</div></div>';
-    }
-    html += '<div class="sz-total">合計 ' + m.total.toLocaleString() + ' 円</div></div></div>';
-  }
-  el.innerHTML = html;
+function commitVsRecord(parsed){
+  var room=parsed.room,isNew=!vsData[room];
+  vsData[room]={normal:parsed.normal,hibi:parsed.hibi,kigai:parsed.kigai};
+  if(isNew) vsOrder.push(room);
+  renderVsLog();
+  toast("✅ "+room+" 計"+(parsed.normal+parsed.hibi+parsed.kigai)+"個 記録完了","ok");
 }
 
-// ============================================================
-// 月別日別一覧モーダル
-// ============================================================
-function openMonthModal(year, month, monthLabel) {
-  document.getElementById("month-modal-title").textContent = "📅 " + monthLabel + " の日別記録";
-  document.getElementById("month-modal-body").innerHTML = '<div class="ld">読み込み中...</div>';
-  document.getElementById("month-modal").classList.add("open");
-  document.body.style.overflow = "hidden";
-  callGAS('getMonthlyDailyByYearMonth', { year: year, month: month })
-    .then(renderMonthModal)
-    .catch(function() { document.getElementById("month-modal-body").innerHTML = '<div class="em">読み込みエラー</div>'; });
-}
-function closeMonthModal(e) { if (e.target === document.getElementById("month-modal")) closeMonthModalBtn(); }
-function closeMonthModalBtn() { document.getElementById("month-modal").classList.remove("open"); document.body.style.overflow = ""; }
-
-function renderMonthModal(res) {
-  var body = document.getElementById("month-modal-body");
-  if (!res || !res.success) { body.innerHTML = '<div class="em">読み込みエラー</div>'; return; }
-  if (!res.records || !res.records.length) { body.innerHTML = '<div class="em"><span class="ee">🥚</span>この月の記録はまだないよ</div>'; return; }
-  var html = '<div class="month-modal-inner">';
-  html += '<div class="month-banner"><div class="month-card-g"><div class="mc-lb">📦 当月合計</div><div class="mc-vl">' + res.grandTotal + '</div><div class="mc-un">個</div></div>' +
-    '<div class="month-card-w"><div class="mc-lb">📅 1日平均</div><div class="mc-vl">' + res.avg + '</div><div class="mc-un">個/日</div></div></div>';
-  for (var i = 0; i < res.records.length; i++) {
-    var r = res.records[i];
-    html += '<div class="di" style="display:flex;justify-content:space-between;align-items:center;" onclick="openDayModalFromMonth(\'' + r.dateStr + '\', \'' + r.label + '\')">' +
-      '<div><div class="dt">' + r.label + '</div><div class="dd">普通 ' + r.normal + ' / ヒビ ' + r.hibi + ' / 規格外 ' + r.kigai + '</div>' +
-      (r.recorders && r.recorders.length ? '<div class="dd">👤 ' + r.recorders.join("・") + '</div>' : '') +
-      '</div><div style="text-align:right;"><div class="dv">' + r.total + '</div><div class="du">個 ›</div></div></div>';
-  }
-  html += '</div>';
-  body.innerHTML = html;
-}
-
-function openDayModalFromMonth(dateStr, label) {
-  document.getElementById("month-modal-sheet").style.display = "none";
-  document.getElementById("day-modal-title").textContent = "📅 " + label + " の記録";
-  document.getElementById("day-modal-body").innerHTML = '<div class="ld">読み込み中...</div>';
-  document.getElementById("day-modal").classList.add("open");
-  callGAS('getDayDetail', { dateStr: dateStr })
-    .then(renderDayDetail)
-    .catch(function() { document.getElementById("day-modal-body").innerHTML = '<div class="em">読み込みエラー</div>'; });
-}
-
-// ============================================================
-// 日別詳細モーダル
-// ============================================================
-function openDayModal(dateStr, label) {
-  document.getElementById("day-modal-title").textContent = "📅 " + label + " の記録";
-  document.getElementById("day-modal-body").innerHTML = '<div class="ld">読み込み中...</div>';
-  document.getElementById("day-modal").classList.add("open");
-  document.body.style.overflow = "hidden";
-  callGAS('getDayDetail', { dateStr: dateStr })
-    .then(renderDayDetail)
-    .catch(function() { document.getElementById("day-modal-body").innerHTML = '<div class="em">読み込みエラー</div>'; });
-}
-function closeDayModal(e) { if (e.target === document.getElementById("day-modal")) closeDayModalBtn(); }
-function closeDayModalBtn() {
-  document.getElementById("day-modal").classList.remove("open");
-  var monthSheet = document.getElementById("month-modal-sheet");
-  if (monthSheet && monthSheet.style.display === "none") monthSheet.style.display = "";
-  else document.body.style.overflow = "";
-}
-
-function renderDayDetail(res) {
-  var body = document.getElementById("day-modal-body");
-  if (!res || !res.success || !res.records.length) { body.innerHTML = '<div class="em">記録が見つかりません</div>'; return; }
-  var html = '<p style="font-size:11px;color:#5A8A5A;padding:8px 16px 0;">号舎をタップして数値を修正→「保存」で確定</p>';
-  for (var i = 0; i < res.records.length; i++) {
-    var r = res.records[i];
-    html += '<div class="rec-card"><div class="rec-card-h"><span>🏠 ' + r.room + '</span>' +
-      '<span class="rc-total" id="rt-' + r.rowIndex + '">' + r.total + ' 個</span></div>' +
-      '<div class="rec-card-body">' +
-      '<div class="rec-row"><label>普通卵</label><input class="rec-input" type="number" inputmode="numeric" id="rn-' + r.rowIndex + '" value="' + r.normalEggs + '" onchange="updateRecTotal(' + r.rowIndex + ')"></div>' +
-      '<div class="rec-row"><label>ヒビ</label><input class="rec-input" type="number" inputmode="numeric" id="rh-' + r.rowIndex + '" value="' + r.hibiEggs + '" onchange="updateRecTotal(' + r.rowIndex + ')"></div>' +
-      '<div class="rec-row"><label>規格外</label><input class="rec-input" type="number" inputmode="numeric" id="rk-' + r.rowIndex + '" value="' + r.kigaiEggs + '" onchange="updateRecTotal(' + r.rowIndex + ')"></div>' +
-      '<div class="rec-row"><label>配合飼料</label><input class="rec-input" type="text" id="rf-' + r.rowIndex + '" value="' + r.feed + '"></div>' +
-      '<div class="rec-row"><label>草・野菜</label><input class="rec-input" type="text" id="rg-' + r.rowIndex + '" value="' + r.grass + '"></div>' +
-      '<div class="rec-row"><label>その他</label><input class="rec-input" type="text" id="ro-' + r.rowIndex + '" value="' + r.other + '"></div>' +
-      '<div class="rec-row"><label>メモ</label><input class="rec-input" type="text" id="rm-' + r.rowIndex + '" value="' + r.memo + '"></div>' +
-      '</div><button class="rec-save-btn" onclick="saveRecEdit(' + r.rowIndex + ', \'' + r.room + '\')">✅ ' + r.room + ' を保存</button></div>';
-  }
-  body.innerHTML = html;
-}
-
-function updateRecTotal(rowIndex) {
-  var n = Number(document.getElementById("rn-" + rowIndex).value) || 0;
-  var h = Number(document.getElementById("rh-" + rowIndex).value) || 0;
-  var k = Number(document.getElementById("rk-" + rowIndex).value) || 0;
-  var el = document.getElementById("rt-" + rowIndex);
-  if (el) el.textContent = (n + h + k) + " 個";
-}
-
-function saveRecEdit(rowIndex, room) {
-  callGAS('updateEggRecord', {
-    rowIndex: rowIndex,
-    normalEggs: document.getElementById("rn-" + rowIndex).value,
-    hibiEggs: document.getElementById("rh-" + rowIndex).value,
-    kigaiEggs: document.getElementById("rk-" + rowIndex).value,
-    feed: document.getElementById("rf-" + rowIndex).value,
-    grass: document.getElementById("rg-" + rowIndex).value,
-    other: document.getElementById("ro-" + rowIndex).value,
-    memo: document.getElementById("rm-" + rowIndex).value
-  }, 'POST')
-  .then(function(r) {
-    toast("✅ " + r.message, "ok");
-    var el = document.getElementById("rt-" + rowIndex);
-    if (el) el.textContent = r.total + " 個";
-    loadToday();
-  })
-  .catch(function(e) { toast("❌ " + (e.message || "エラー"), "ng"); });
-}
-
-// ============================================================
-// マイルストーン達成バナー
-// ============================================================
-var MILESTONES = [6000, 7777, 10000];
-
-function checkAndShowMilestoneBanner() {
-  callGAS('getMonthlyDailyRecords')
-    .then(function(recs) {
-      var milestone = calcMilestone(recs);
-      var banner = document.getElementById('milestone-banner');
-      if (milestone) {
-        banner.textContent = '🥚 祝 ' + milestone.toLocaleString() + '個達成！ 🎉';
-        banner.style.display = 'block';
-      } else {
-        banner.style.display = 'none';
-      }
-    })
-    .catch(function(){});
-}
-
-function calcMilestone(recs) {
-  if (!recs || !recs.length) return null;
-  var sorted = recs.slice().sort(function(a, b) {
-    return a.dateStr < b.dateStr ? -1 : 1;
+function renderVsLog(){
+  var el=document.getElementById("vs-log"),sb=document.getElementById("vs-save-all");
+  if(!vsOrder.length){ el.innerHTML='<div class="vs-empty">まだ記録がありません</div>'; sb.disabled=true; return; }
+  var html="";
+  vsOrder.forEach(function(room){
+    var d=vsData[room],total=(d.normal||0)+(d.hibi||0)+(d.kigai||0),rid=room.replace("号舎","");
+    html+='<div class="vs-card"><div class="vs-card-h"><span>🏠 '+room+'</span><div style="display:flex;align-items:center;gap:4px;"><span class="vs-card-total" id="vst-'+rid+'">'+total+' 個</span><button class="vs-card-del" onclick="deleteVsRecord(\''+room+'\')">✕</button></div></div><div class="vs-card-body"><div class="vs-field"><label>普通</label><input class="vs-inp" type="number" inputmode="numeric" id="vsn-'+rid+'" value="'+d.normal+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div><div class="vs-field"><label>ヒビ</label><input class="vs-inp brk" type="number" inputmode="numeric" id="vsh-'+rid+'" value="'+d.hibi+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div><div class="vs-field"><label>規格外</label><input class="vs-inp" type="number" inputmode="numeric" id="vsk-'+rid+'" value="'+d.kigai+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div></div></div>';
   });
-  var running = 0;
-  var lastMilestone = null;
-  var lastMilestoneDate = null;
-  for (var i = 0; i < sorted.length; i++) {
-    var prev = running;
-    running += sorted[i].total || 0;
-    for (var j = 0; j < MILESTONES.length; j++) {
-      if (prev < MILESTONES[j] && running >= MILESTONES[j]) {
-        lastMilestone = MILESTONES[j];
-        lastMilestoneDate = sorted[i].dateStr;
-      }
-    }
-  }
-  if (!lastMilestone) return null;
-  var today = new Date();
-  var todayStr = today.getFullYear() + '-' +
-    String(today.getMonth()+1).padStart(2,'0') + '-' +
-    String(today.getDate()).padStart(2,'0');
-  return lastMilestoneDate === todayStr ? lastMilestone : null;
+  el.innerHTML=html; sb.disabled=false;
 }
 
-window.onload = init;
+function updateVsTotal(room,rid){
+  var n=parseInt(document.getElementById("vsn-"+rid).value)||0;
+  var h=parseInt(document.getElementById("vsh-"+rid).value)||0;
+  var k=parseInt(document.getElementById("vsk-"+rid).value)||0;
+  vsData[room]={normal:n,hibi:h,kigai:k};
+  var el=document.getElementById("vst-"+rid); if(el) el.textContent=(n+h+k)+" 個";
+}
+
+function deleteVsRecord(room){
+  delete vsData[room]; vsOrder=vsOrder.filter(function(r){return r!==room;}); renderVsLog();
+}
+
+function clearVsSession(){
+  stopVoiceSession(); vsData={}; vsOrder=[]; renderVsLog();
+  var tr=document.getElementById("vs-transcript"); tr.textContent="ここに認識した音声が表示されます"; tr.className="vs-transcript";
+}
+
+function saveAllSession(){
+  if(!vsOrder.length){toast("記録がありません","ng");return;}
+  // 画面の入力値で最新化
+  vsOrder.forEach(function(room){
+    var rid=room.replace("号舎","");
+    vsData[room]={normal:parseInt(document.getElementById("vsn-"+rid).value)||0,hibi:parseInt(document.getElementById("vsh-"+rid).value)||0,kigai:parseInt(document.getElementById("vsk-"+rid).value)||0};
+  });
+  var date=document.getElementById("record-date").value,recorder=document.getElementById("vs-recorder").value;
+  var sb=document.getElementById("vs-save-all"); sb.disabled=true; sb.textContent="保存中...";
+  Promise.all(vsOrder.map(function(room){
+    var d=vsData[room];
+    return callGAS('saveRecord',{date:date,room:room,normalEggs:d.normal,hibiEggs:d.hibi,kigaiEggs:d.kigai,feed:"",grass:"",other:"",memo:"[音声入力]",recorder:recorder},'POST');
+  }))
+  .then(function(){toast("✅ "+vsOrder.length+"号舎分を保存しました","ok");clearVsSession();})
+  .catch(function(e){toast("❌ "+(e.message||"保存エラー"),"ng");sb.disabled=false;sb.textContent="💾 全て保存する";});
+}
+
+window.onload=init;
 </script>
 </body>
 </html>
