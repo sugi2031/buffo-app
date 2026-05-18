@@ -403,7 +403,7 @@ function parseVsText(text){
   if(hm) result.hibi=parseInt(hm[1]);
 
   // 規格外
-  var km=text.match(/規格外[^\d]*(\d+)/);
+  var km=text.match(/(?:規格外|企画外|きかくがい)[^\d]*(\d+)/);
   if(km) result.kigai=parseInt(km[1]);
 
   return result;
