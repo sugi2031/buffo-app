@@ -267,9 +267,9 @@ body{font-family:-apple-system,"Hiragino Maru Gothic Pro",sans-serif;background:
       <button class="vs-btn-clear" onclick="clearVsSession()">🗑 クリア</button>
     </div>
     <div class="vs-guide">
-      <span class="kw">話し方</span>「1号舎 普通32個 ヒビ2個 規格外1個」<br>
-      <span class="kw">省略OK</span>「2号舎 普通28個」（ヒビ・規格外は省略可）<br>
-      <span class="kw">確定</span>認識後に画面の「✅ 記録する」をタップ
+      <span class="kw">話し方</span>「1号舎 32個 ヒビ2個 規格外1個」<br>
+      <span class="kw">省略OK</span>「2号舎 28個」（ヒビ・規格外省略可）<br>
+      <span class="kw">確定</span>認識後に「✅ 記録する」をタップ
     </div>
     <div class="vs-preview" id="vs-preview"></div>
     <div class="fi" style="margin-bottom:12px;">
@@ -394,14 +394,7 @@ var NUM_MAP={"〇":"0","一":"1","二":"2","三":"3","四":"4","五":"5","六":"
 function normalizeNum(s){return s.replace(/[〇一二三四五六七八九０-９]/g,function(c){return NUM_MAP[c]||c;});}
 function toggleVoiceSession(){vsActive?stopVoiceSession():startVoiceSession();}
 function startVoiceSession(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast("このブラウザは音声入力非対応です","ng");return;}vsActive=true;updateVsUI();vsListen();}
-
-// ★ バグ修正①：onend を null 化してから stop() → ループ防止
-function stopVoiceSession(){
-  vsActive=false;
-  if(vsRec){vsRec.onresult=null;vsRec.onerror=null;vsRec.onend=null;try{vsRec.stop();}catch(e){}vsRec=null;}
-  updateVsUI();
-}
-
+function stopVoiceSession(){vsActive=false;if(vsRec){vsRec.onresult=null;vsRec.onerror=null;vsRec.onend=null;try{vsRec.stop();}catch(e){}vsRec=null;}updateVsUI();}
 function vsListen(){
   if(!vsActive)return;
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -412,7 +405,6 @@ function vsListen(){
     var text=texts[0];
     var tr=document.getElementById("vs-transcript");tr.textContent="「"+text+"」";tr.className="vs-transcript active";
     for(var i=0;i<texts.length;i++){if(texts[i].match(/セッション終了|全部終了|全体終了/)){stopVoiceSession();toast("✅ セッション終了","ok");return;}}
-    // ★ バグ修正②：キーワード不要。発話後即プレビュー表示
     var parsed=parseVsText(text);
     if(!parsed.room){for(var i=1;i<texts.length;i++){var alt=parseVsText(texts[i]);if(alt.room){parsed=alt;break;}}}
     showVsPreview(parsed,text);
@@ -422,14 +414,32 @@ function vsListen(){
   vsRec.start();
 }
 
-// ★ バグ修正③：号舎・号車・号者など同音異義語を全て号舎として受け付ける
+// ★ 今回のメイン修正：号舎直後の数字を普通卵として認識
 function parseVsText(text){
   var result={room:null,normal:0,hibi:0,kigai:0};
+
+  // 号舎認識（号車・号者・ごうしゃ等の同音異義語も許容）
   var rm=text.match(/([1-9])\s*(?:号舎|号車|号者|ごうしゃ)/);
-  if(rm)result.room=rm[1]+"号舎";
-  var nm=text.match(/普通[^\d]*(\d+)/);if(nm)result.normal=parseInt(nm[1]);
-  var hm=text.match(/(?:ひび|ヒビ|亀裂)[^\d]*(\d+)/i);if(hm)result.hibi=parseInt(hm[1]);
-  var km=text.match(/規格外[^\d]*(\d+)/);if(km)result.kigai=parseInt(km[1]);
+  if(rm) result.room=rm[1]+"号舎";
+
+  // 普通卵：「普通◯個」または「普通」なしで号舎直後の数字
+  var nm=text.match(/普通[^\d]*(\d+)/);
+  if(nm){
+    result.normal=parseInt(nm[1]);
+  } else {
+    // ★修正箇所：「1号車30」→ 号舎キーワード直後の数字を普通卵とみなす
+    var nm2=text.match(/(?:号舎|号車|号者|ごうしゃ)\s*(\d+)/);
+    if(nm2) result.normal=parseInt(nm2[1]);
+  }
+
+  // ヒビ
+  var hm=text.match(/(?:ひび|ヒビ|亀裂)[^\d]*(\d+)/i);
+  if(hm) result.hibi=parseInt(hm[1]);
+
+  // 規格外
+  var km=text.match(/規格外[^\d]*(\d+)/);
+  if(km) result.kigai=parseInt(km[1]);
+
   return result;
 }
 
@@ -459,43 +469,16 @@ function showVsPreview(parsed,rawText){
 }
 
 function updateVpRoomBadge(){var v=document.getElementById("vp-room-num").value;var b=document.getElementById("vp-room-badge");if(b){b.textContent=v?v+"号舎":"（号舎未入力）";b.className=v?"vs-preview-room":"vs-preview-room warn";}}
-
-function confirmVsPreview(){
-  var roomNum=document.getElementById("vp-room-num").value;
-  if(!roomNum||roomNum<1||roomNum>7){toast("号舎（1〜7）を入力してください","ng");return;}
-  var parsed={room:roomNum+"号舎",normal:parseInt(document.getElementById("vp-n").value)||0,hibi:parseInt(document.getElementById("vp-h").value)||0,kigai:parseInt(document.getElementById("vp-k").value)||0};
-  commitVsRecord(parsed);hideVsPreview();
-  if(vsActive)setTimeout(vsListen,300);
-}
-
+function confirmVsPreview(){var roomNum=document.getElementById("vp-room-num").value;if(!roomNum||roomNum<1||roomNum>7){toast("号舎（1〜7）を入力してください","ng");return;}var parsed={room:roomNum+"号舎",normal:parseInt(document.getElementById("vp-n").value)||0,hibi:parseInt(document.getElementById("vp-h").value)||0,kigai:parseInt(document.getElementById("vp-k").value)||0};commitVsRecord(parsed);hideVsPreview();if(vsActive)setTimeout(vsListen,300);}
 function retryVsPreview(){hideVsPreview();var tr=document.getElementById("vs-transcript");tr.textContent="ここに認識した音声が表示されます";tr.className="vs-transcript";if(vsActive)setTimeout(vsListen,300);}
-
 function hideVsPreview(){vsPending=null;var el=document.getElementById("vs-preview");el.style.display="none";el.innerHTML="";}
-
-function updateVsUI(){var s=document.getElementById("vs-status"),b=document.getElementById("vs-btn-start");if(vsActive){s.textContent="🔴 録音中 — 「◯号舎 普通◯個 ヒビ◯個」と話してください";s.className="vs-status listening";b.textContent="⏹ 録音停止";b.classList.add("active");}else{s.textContent="⏹ 停止中 — 「音声記録開始」を押してください";s.className="vs-status";b.textContent="🎤 音声記録開始";b.classList.remove("active");}}
-
+function updateVsUI(){var s=document.getElementById("vs-status"),b=document.getElementById("vs-btn-start");if(vsActive){s.textContent="🔴 録音中 — 「◯号舎 ◯個 ヒビ◯個」と話してください";s.className="vs-status listening";b.textContent="⏹ 録音停止";b.classList.add("active");}else{s.textContent="⏹ 停止中 — 「音声記録開始」を押してください";s.className="vs-status";b.textContent="🎤 音声記録開始";b.classList.remove("active");}}
 function commitVsRecord(parsed){var room=parsed.room,isNew=!vsData[room];vsData[room]={normal:parsed.normal,hibi:parsed.hibi,kigai:parsed.kigai};if(isNew)vsOrder.push(room);renderVsLog();toast("✅ "+room+" 計"+(parsed.normal+parsed.hibi+parsed.kigai)+"個 記録しました","ok");}
-
-function renderVsLog(){
-  var el=document.getElementById("vs-log"),sb=document.getElementById("vs-save-all");
-  if(!vsOrder.length){el.innerHTML='<div class="vs-empty">まだ記録がありません</div>';sb.disabled=true;return;}
-  var html="";
-  vsOrder.forEach(function(room){var d=vsData[room],total=(d.normal||0)+(d.hibi||0)+(d.kigai||0),rid=room.replace("号舎","");html+='<div class="vs-card"><div class="vs-card-h"><span>🏠 '+room+'</span><div style="display:flex;align-items:center;gap:4px;"><span class="vs-card-total" id="vst-'+rid+'">'+total+' 個</span><button class="vs-card-del" onclick="deleteVsRecord(\''+room+'\')">✕</button></div></div><div class="vs-card-body"><div class="vs-field"><label>普通</label><input class="vs-inp" type="number" inputmode="numeric" id="vsn-'+rid+'" value="'+d.normal+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div><div class="vs-field"><label>ヒビ</label><input class="vs-inp brk" type="number" inputmode="numeric" id="vsh-'+rid+'" value="'+d.hibi+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div><div class="vs-field"><label>規格外</label><input class="vs-inp" type="number" inputmode="numeric" id="vsk-'+rid+'" value="'+d.kigai+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div></div></div>';});
-  el.innerHTML=html;sb.disabled=false;
-}
-
+function renderVsLog(){var el=document.getElementById("vs-log"),sb=document.getElementById("vs-save-all");if(!vsOrder.length){el.innerHTML='<div class="vs-empty">まだ記録がありません</div>';sb.disabled=true;return;}var html="";vsOrder.forEach(function(room){var d=vsData[room],total=(d.normal||0)+(d.hibi||0)+(d.kigai||0),rid=room.replace("号舎","");html+='<div class="vs-card"><div class="vs-card-h"><span>🏠 '+room+'</span><div style="display:flex;align-items:center;gap:4px;"><span class="vs-card-total" id="vst-'+rid+'">'+total+' 個</span><button class="vs-card-del" onclick="deleteVsRecord(\''+room+'\')">✕</button></div></div><div class="vs-card-body"><div class="vs-field"><label>普通</label><input class="vs-inp" type="number" inputmode="numeric" id="vsn-'+rid+'" value="'+d.normal+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div><div class="vs-field"><label>ヒビ</label><input class="vs-inp brk" type="number" inputmode="numeric" id="vsh-'+rid+'" value="'+d.hibi+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div><div class="vs-field"><label>規格外</label><input class="vs-inp" type="number" inputmode="numeric" id="vsk-'+rid+'" value="'+d.kigai+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div></div></div>';});el.innerHTML=html;sb.disabled=false;}
 function updateVsTotal(room,rid){var n=parseInt(document.getElementById("vsn-"+rid).value)||0,h=parseInt(document.getElementById("vsh-"+rid).value)||0,k=parseInt(document.getElementById("vsk-"+rid).value)||0;vsData[room]={normal:n,hibi:h,kigai:k};var el=document.getElementById("vst-"+rid);if(el)el.textContent=(n+h+k)+" 個";}
 function deleteVsRecord(room){delete vsData[room];vsOrder=vsOrder.filter(function(r){return r!==room;});renderVsLog();}
 function clearVsSession(){stopVoiceSession();hideVsPreview();vsData={};vsOrder=[];renderVsLog();var tr=document.getElementById("vs-transcript");tr.textContent="ここに認識した音声が表示されます";tr.className="vs-transcript";}
-function saveAllSession(){
-  if(!vsOrder.length){toast("記録がありません","ng");return;}
-  vsOrder.forEach(function(room){var rid=room.replace("号舎","");vsData[room]={normal:parseInt(document.getElementById("vsn-"+rid).value)||0,hibi:parseInt(document.getElementById("vsh-"+rid).value)||0,kigai:parseInt(document.getElementById("vsk-"+rid).value)||0};});
-  var date=document.getElementById("record-date").value,recorder=document.getElementById("vs-recorder").value;
-  var sb=document.getElementById("vs-save-all");sb.disabled=true;sb.textContent="保存中...";
-  Promise.all(vsOrder.map(function(room){var d=vsData[room];return callGAS('saveRecord',{date:date,room:room,normalEggs:d.normal,hibiEggs:d.hibi,kigaiEggs:d.kigai,feed:"",grass:"",other:"",memo:"[音声入力]",recorder:recorder},'POST');}))
-  .then(function(){toast("✅ "+vsOrder.length+"号舎分を保存しました","ok");clearVsSession();})
-  .catch(function(e){toast("❌ "+(e.message||"保存エラー"),"ng");sb.disabled=false;sb.textContent="💾 全て保存する";});
-}
+function saveAllSession(){if(!vsOrder.length){toast("記録がありません","ng");return;}vsOrder.forEach(function(room){var rid=room.replace("号舎","");vsData[room]={normal:parseInt(document.getElementById("vsn-"+rid).value)||0,hibi:parseInt(document.getElementById("vsh-"+rid).value)||0,kigai:parseInt(document.getElementById("vsk-"+rid).value)||0};});var date=document.getElementById("record-date").value,recorder=document.getElementById("vs-recorder").value;var sb=document.getElementById("vs-save-all");sb.disabled=true;sb.textContent="保存中...";Promise.all(vsOrder.map(function(room){var d=vsData[room];return callGAS('saveRecord',{date:date,room:room,normalEggs:d.normal,hibiEggs:d.hibi,kigaiEggs:d.kigai,feed:"",grass:"",other:"",memo:"[音声入力]",recorder:recorder},'POST');})).then(function(){toast("✅ "+vsOrder.length+"号舎分を保存しました","ok");clearVsSession();}).catch(function(e){toast("❌ "+(e.message||"保存エラー"),"ng");sb.disabled=false;sb.textContent="💾 全て保存する";});}
 
 window.onload=init;
 </script>
