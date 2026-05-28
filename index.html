@@ -300,6 +300,24 @@ body{font-family:-apple-system,"Hiragino Maru Gothic Pro",sans-serif;background:
     </div>
   </div>
 </div>
+<div class="modal-overlay" id="shizai-edit-modal" onclick="closeShizaiEditModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <div class="modal-title" id="shizai-edit-title">📦 資材を編集</div>
+      <button class="modal-close" onclick="closeShizaiEditModalBtn()">✕</button>
+    </div>
+    <div style="padding:16px;">
+      <div class="fi"><label>資材名</label><input type="text" id="se-name" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"></div>
+      <div style="display:flex;gap:8px;">
+        <div class="fi" style="flex:1;"><label>数量</label><input type="number" id="se-qty" inputmode="numeric" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;-moz-appearance:textfield;"></div>
+        <div class="fi" style="flex:1;"><label>単位</label><select id="se-unit" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;"><option>kg</option><option>g</option><option>袋</option><option>個</option><option>L</option><option>本</option><option>箱</option><option>枚</option><option>その他</option></select></div>
+        <div class="fi" style="flex:1.5;"><label>金額（円）</label><input type="number" id="se-price" inputmode="numeric" style="width:100%;padding:13px;border:2px solid #C0DCC0;border-radius:10px;font-size:16px;background:#EAF5EA;font-family:inherit;-moz-appearance:textfield;"></div>
+      </div>
+      <button class="btn-save" id="se-save-btn" onclick="doUpdateShizai()" style="margin-bottom:10px;">✅ 保存する</button>
+      <button onclick="doDeleteShizai()" style="width:100%;padding:16px;background:#fff;color:#C0392B;border:2px solid #C0392B;border-radius:16px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;">🗑 この記録を削除する</button>
+    </div>
+  </div>
+</div>
 <div class="modal-overlay" id="day-modal" onclick="closeDayModal(event)"><div class="modal-sheet" id="day-modal-sheet"><div class="modal-header"><div class="modal-title" id="day-modal-title">📅 日別詳細</div><button class="modal-close" onclick="closeDayModalBtn()">✕</button></div><div id="day-modal-body"><div class="ld">読み込み中...</div></div></div></div>
 <div class="modal-overlay" id="month-modal" onclick="closeMonthModal(event)"><div class="modal-sheet" id="month-modal-sheet"><div class="modal-header"><div class="modal-title" id="month-modal-title">📅 月別記録</div><button class="modal-close" onclick="closeMonthModalBtn()">✕</button></div><div id="month-modal-body"><div class="ld">読み込み中...</div></div></div></div>
 <div class="toast" id="toast"></div>
@@ -503,7 +521,27 @@ function doResetFlock(){if(!sel){toast("号舎を選んでね","ng");return;}if(
 function calcSzTotal(){var t=0;document.querySelectorAll(".sz-price").forEach(function(el){t+=Number(el.value)||0;});document.getElementById("sz-live-total").textContent="合計 ¥"+t.toLocaleString();}
 function doSaveShizai(){var rows=document.querySelectorAll("#sz-rows .sz-item-wrap"),items=[];for(var i=0;i<rows.length;i++){items.push({name:rows[i].querySelector('[data-sz="name"]').value,qty:rows[i].querySelector('[data-sz="qty"]').value,unit:rows[i].querySelector('[data-sz="unit"]').value,price:rows[i].querySelector('[data-sz="price"]').value});}var pts=document.getElementById("sz-month").value.split("-"),ml=pts[0]+"年"+parseInt(pts[1])+"月";cacheInvalidate(['getShizaiSummary']);callGAS('saveShizaiRecord',{month:ml,items:items,recorder:document.getElementById("sz-recorder").value},'POST').then(function(r){toast("✅ "+r.message,"ok");document.querySelectorAll("#sz-rows .sz-name").forEach(function(e){e.value="";});document.querySelectorAll("#sz-rows .sz-qty").forEach(function(e){e.value="";});document.querySelectorAll("#sz-rows .sz-price").forEach(function(e){e.value="";});calcSzTotal();loadShizaiHistory();}).catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});}
 function loadShizaiHistory(){var cached=cacheGet('getShizaiSummary',{});if(cached){renderShizaiHistory(cached);return;}document.getElementById("shizai-history").innerHTML='<div class="skel"></div>';callGAS('getShizaiSummary').then(renderShizaiHistory).catch(function(){document.getElementById("shizai-history").innerHTML='<div class="em">読み込めませんでした</div>';});}
-function renderShizaiHistory(data){var el=document.getElementById("shizai-history");if(!data||!data.length){el.innerHTML='<div class="em"><span class="ee">📦</span>まだ記録がないよ</div>';return;}var h="";for(var i=0;i<data.length;i++){var m=data[i];h+='<div class="sz-month"><div class="sz-month-h"><span>'+m.month+'</span><span>合計 '+m.total.toLocaleString()+' 円</span></div><div class="sz-month-body">';for(var j=0;j<m.items.length;j++){var it=m.items[j];var dl=it.recordedDate?'<div style="font-size:10px;color:#5A8A5A;margin-bottom:2px;">📅 '+it.recordedDate+'</div>':'';h+='<div class="sz-item" style="flex-direction:column;align-items:stretch;padding:8px 0;">'+dl+'<div style="display:flex;justify-content:space-between;align-items:center;"><span>'+it.name+'　'+it.qty+it.unit+'</span><span style="color:#2D6A2D;font-weight:700;">'+it.price.toLocaleString()+' 円</span></div></div>';}h+='<div class="sz-total">合計 '+m.total.toLocaleString()+' 円</div></div></div>';}el.innerHTML=h;}
+function renderShizaiHistory(data){
+  var el=document.getElementById("shizai-history");
+  if(!data||!data.length){el.innerHTML='<div class="em"><span class="ee">📦</span>まだ記録がないよ</div>';return;}
+  var h="";
+  for(var i=0;i<data.length;i++){
+    var m=data[i];
+    h+='<div class="sz-month"><div class="sz-month-h"><span>'+m.month+'</span><span>合計 '+m.total.toLocaleString()+' 円</span></div><div class="sz-month-body">';
+    for(var j=0;j<m.items.length;j++){
+      var it=m.items[j];
+      var dl=it.recordedDate?'<div style="font-size:10px;color:#5A8A5A;margin-bottom:2px;">📅 '+it.recordedDate+'</div>':'';
+      // ★ タップで編集モーダルを開く
+      h+='<div class="sz-item" style="flex-direction:column;align-items:stretch;padding:10px 0;cursor:pointer;-webkit-tap-highlight-color:rgba(45,106,45,0.15);" onclick="openShizaiEditModal('+it.rowIndex+',''+it.name.replace(/'/g,"\'")+'',' +it.qty+',''+it.unit+'','+it.price+')">'+dl;
+      h+='<div style="display:flex;justify-content:space-between;align-items:center;">';
+      h+='<span>'+it.name+'　'+it.qty+it.unit+'</span>';
+      h+='<div style="display:flex;align-items:center;gap:8px;"><span style="color:#2D6A2D;font-weight:700;">'+it.price.toLocaleString()+' 円</span><span style="font-size:18px;color:#C0DCC0;">›</span></div>';
+      h+='</div></div>';
+    }
+    h+='<div class="sz-total">合計 '+m.total.toLocaleString()+' 円</div></div></div>';
+  }
+  el.innerHTML=h;
+}
 function openMonthModal(y,m,ml){document.getElementById("month-modal-title").textContent="📅 "+ml+" の日別記録";document.getElementById("month-modal-body").innerHTML='<div class="ld">読み込み中...</div>';document.getElementById("month-modal").classList.add("open");document.body.style.overflow="hidden";callGAS('getMonthlyDailyByYearMonth',{year:y,month:m}).then(renderMonthModal).catch(function(){document.getElementById("month-modal-body").innerHTML='<div class="em">読み込みエラー</div>';});}
 function closeMonthModal(e){if(e.target===document.getElementById("month-modal"))closeMonthModalBtn();}
 function closeMonthModalBtn(){document.getElementById("month-modal").classList.remove("open");document.body.style.overflow="";}
@@ -533,7 +571,18 @@ function normalizeNum(s){return s.replace(/[〇一二三四五六七八九０-�
 function toggleVoiceSession(){vsActive?stopVoiceSession():startVoiceSession();}
 function startVoiceSession(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast("このブラウザは音声入力非対応です","ng");return;}vsActive=true;vsTemp={room:null,normal:0,hibi:0,kigai:0};vsStep='room';updateStepUI();updateStartBtn();vsListen();}
 function stopVoiceSession(){vsActive=false;vsStep='idle';if(vsRec){vsRec.onresult=null;vsRec.onerror=null;vsRec.onend=null;try{vsRec.stop();}catch(e){}vsRec=null;}updateStepUI();updateStartBtn();}
-function updateStartBtn(){var b=document.getElementById("vs-btn-start");if(vsActive){b.textContent="⏹ 録音停止";b.classList.add("active");}else{b.textContent="🎤 音声記録開始";b.classList.remove("active");}}
+function updateStartBtn(){
+  var b=document.getElementById("vs-btn-start");
+  var prevVisible=document.getElementById("vs-preview").style.display==="block";
+  if(vsActive && prevVisible){
+    // プレビュー確認中はshowVsPreviewStep内でテキスト設定済み
+    return;
+  } else if(vsActive){
+    b.textContent="⏹ 録音停止";b.classList.add("active");
+  } else {
+    b.textContent="🎤 音声記録開始";b.classList.remove("active");
+  }
+}
 function updateStepUI(){var box=document.getElementById("vs-step-box"),qEl=document.getElementById("vs-step-q"),resEl=document.getElementById("vs-step-result"),rawEl=document.getElementById("vs-step-raw"),dotsEl=document.getElementById("vs-step-dots"),btnsEl=document.getElementById("vs-step-btns");if(vsStep==='idle'){box.className="vs-step-box";qEl.textContent="「音声記録開始」を押してください";qEl.className="vs-step-q";resEl.textContent="";rawEl.textContent="";dotsEl.innerHTML="";btnsEl.innerHTML="";return;}box.className="vs-step-box listening";qEl.textContent=STEP_LABELS[vsStep];qEl.className="vs-step-q listening";resEl.textContent="🎤 聞いてます...";rawEl.textContent=STEP_EXAMPLES[vsStep];var si=STEPS.indexOf(vsStep),dots="";for(var i=0;i<STEPS.length;i++){var cls=i<si?"vs-step-dot done":i===si?"vs-step-dot active":"vs-step-dot";dots+='<div class="'+cls+'"></div>';}dotsEl.innerHTML=dots;if(vsStep==='hibi'||vsStep==='kigai'){btnsEl.innerHTML='<button class="vs-step-skip" onclick="skipStep()">0個（なし）</button><button class="vs-step-retry" onclick="retryStep()">🔄 再認識</button>';}else{btnsEl.innerHTML='<button class="vs-step-retry" onclick="retryStep()">🔄 再認識</button>';}}
 function vsListen(){if(!vsActive||vsStep==='idle')return;var SR=window.SpeechRecognition||window.webkitSpeechRecognition;vsRec=new SR();vsRec.lang='ja-JP';vsRec.interimResults=false;vsRec.maxAlternatives=3;
   vsRec.onresult=function(e){
@@ -554,54 +603,81 @@ function isZeroWord(texts){for(var i=0;i<texts.length;i++){if(texts[i].match(/�
 function skipStep(){if(vsStep==='hibi'){vsTemp.hibi=0;toast("✅ ヒビ 0個","ok");vsStep='kigai';updateStepUI();vsListen();}else if(vsStep==='kigai'){vsTemp.kigai=0;finishSteps();}}
 function retryStep(){if(vsRec){vsRec.onresult=null;vsRec.onerror=null;vsRec.onend=null;try{vsRec.stop();}catch(e){}vsRec=null;}updateStepUI();vsListen();}
 function finishSteps(){document.getElementById("vs-step-result").textContent="✅ 入力完了";toast("✅ 規格外 "+vsTemp.kigai+"個","ok");vsStep='idle';if(vsRec){vsRec.onresult=null;vsRec.onerror=null;vsRec.onend=null;try{vsRec.stop();}catch(e){}vsRec=null;}setTimeout(showVsPreviewStep,600);}
-function showVsPreviewStep(){var el=document.getElementById("vs-preview"),total=vsTemp.normal+vsTemp.hibi+vsTemp.kigai;var h='<div class="vs-preview-h">📋 '+vsTemp.room+' の記録を確認 → 「✅ 記録する」</div><div class="vs-preview-body"><span class="vs-preview-room">'+vsTemp.room+'</span><div class="vs-preview-nums"><div class="vs-preview-field"><label>普通</label><input class="vs-preview-inp" type="number" inputmode="numeric" id="vp-n" value="'+vsTemp.normal+'"></div><div class="vs-preview-field"><label>ヒビ</label><input class="vs-preview-inp brk" type="number" inputmode="numeric" id="vp-h" value="'+vsTemp.hibi+'"></div><div class="vs-preview-field"><label>規格外</label><input class="vs-preview-inp" type="number" inputmode="numeric" id="vp-k" value="'+vsTemp.kigai+'"></div></div></div><div class="vs-preview-btns"><button class="vs-preview-ok" onclick="confirmVsPreview()">✅ 記録する（計'+total+'個）</button><button class="vs-preview-ng" onclick="retryAllSteps()">🔄 やり直し</button></div>';el.innerHTML=h;el.style.display="block";el.scrollIntoView({behavior:"smooth",block:"nearest"});updateStepUI();updateStartBtn();}
+function showVsPreviewStep(){
+  var el=document.getElementById("vs-preview");
+  var total=vsTemp.normal+vsTemp.hibi+vsTemp.kigai;
+  var h='<div class="vs-preview-h">📋 '+vsTemp.room+' — 内容を確認してください</div>'+
+    '<div class="vs-preview-body">'+
+    '<span class="vs-preview-room">'+vsTemp.room+'</span>'+
+    '<div class="vs-preview-nums">'+
+    '<div class="vs-preview-field"><label>普通</label><input class="vs-preview-inp" type="number" inputmode="numeric" id="vp-n" value="'+vsTemp.normal+'"></div>'+
+    '<div class="vs-preview-field"><label>ヒビ</label><input class="vs-preview-inp brk" type="number" inputmode="numeric" id="vp-h" value="'+vsTemp.hibi+'"></div>'+
+    '<div class="vs-preview-field"><label>規格外</label><input class="vs-preview-inp" type="number" inputmode="numeric" id="vp-k" value="'+vsTemp.kigai+'"></div>'+
+    '</div>'+
+    '<div style="font-size:11px;color:#5A8A5A;margin-top:8px;text-align:center;">数字を直接タップして修正もできます</div>'+
+    '</div>'+
+    '<div class="vs-preview-btns">'+
+    '<button class="vs-preview-ok" onclick="confirmVsPreview()">✅ 記録する（計'+total+'個）</button>'+
+    '<button class="vs-preview-ng" onclick="retryAllSteps()">🔄 再録音</button>'+
+    '</div>';
+  el.innerHTML=h;
+  el.style.display="block";
+  el.scrollIntoView({behavior:"smooth",block:"nearest"});
+  // ★ step boxをプレビュー確認の案内に更新
+  var box=document.getElementById("vs-step-box");
+  box.className="vs-step-box";
+  document.getElementById("vs-step-q").className="vs-step-q";
+  document.getElementById("vs-step-q").textContent="👇 下の内容を確認して「記録する」をタップ";
+  document.getElementById("vs-step-result").textContent="";
+  document.getElementById("vs-step-raw").textContent="記録後、自動で次の号舎の録音が始まります";
+  var dots="";for(var i=0;i<STEPS.length;i++){dots+='<div class="vs-step-dot done"></div>';}
+  document.getElementById("vs-step-dots").innerHTML=dots;
+  document.getElementById("vs-step-btns").innerHTML='<button class="vs-step-skip" onclick="confirmVsPreview()">✅ 記録する（計'+total+'個）</button>';
+  // ★ ボタンテキストも案内に変更
+  var b=document.getElementById("vs-btn-start");
+  b.textContent="↑ 確認したら「記録する」をタップ";
+  b.classList.add("active");
+}
 function confirmVsPreview(){var p={room:vsTemp.room,normal:parseInt(document.getElementById("vp-n").value)||0,hibi:parseInt(document.getElementById("vp-h").value)||0,kigai:parseInt(document.getElementById("vp-k").value)||0};var room=p.room,isNew=!vsData[room];vsData[room]={normal:p.normal,hibi:p.hibi,kigai:p.kigai};if(isNew)vsOrder.push(room);renderVsLog();toast("✅ "+room+" 計"+(p.normal+p.hibi+p.kigai)+"個 記録しました","ok");document.getElementById("vs-preview").style.display="none";document.getElementById("vs-preview").innerHTML="";startVoiceSession();}
-function retryAllSteps(){document.getElementById("vs-preview").style.display="none";document.getElementById("vs-preview").innerHTML="";startVoiceSession();}
+function retryAllSteps(){
+  document.getElementById("vs-preview").style.display="none";
+  document.getElementById("vs-preview").innerHTML="";
+  startVoiceSession();
+}
 function renderVsLog(){var el=document.getElementById("vs-log"),sb=document.getElementById("vs-save-all");if(!vsOrder.length){el.innerHTML='<div class="vs-empty">まだ記録がありません</div>';sb.disabled=true;return;}var h="";vsOrder.forEach(function(room){var d=vsData[room],total=(d.normal||0)+(d.hibi||0)+(d.kigai||0),rid=room.replace("号舎","");h+='<div class="vs-card"><div class="vs-card-h"><span>🏠 '+room+'</span><div style="display:flex;align-items:center;gap:4px;"><span class="vs-card-total" id="vst-'+rid+'">'+total+' 個</span><button class="vs-card-del" onclick="deleteVsRecord(\''+room+'\')">✕</button></div></div><div class="vs-card-body"><div class="vs-field"><label>普通</label><input class="vs-inp" type="number" inputmode="numeric" id="vsn-'+rid+'" value="'+d.normal+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div><div class="vs-field"><label>ヒビ</label><input class="vs-inp brk" type="number" inputmode="numeric" id="vsh-'+rid+'" value="'+d.hibi+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div><div class="vs-field"><label>規格外</label><input class="vs-inp" type="number" inputmode="numeric" id="vsk-'+rid+'" value="'+d.kigai+'" oninput="updateVsTotal(\''+room+'\',\''+rid+'\')"></div></div></div>';});el.innerHTML=h;sb.disabled=false;}
 function updateVsTotal(room,rid){var n=parseInt(document.getElementById("vsn-"+rid).value)||0,h=parseInt(document.getElementById("vsh-"+rid).value)||0,k=parseInt(document.getElementById("vsk-"+rid).value)||0;vsData[room]={normal:n,hibi:h,kigai:k};var el=document.getElementById("vst-"+rid);if(el)el.textContent=(n+h+k)+" 個";}
 function deleteVsRecord(room){delete vsData[room];vsOrder=vsOrder.filter(function(r){return r!==room;});renderVsLog();}
 function clearVsSession(){stopVoiceSession();vsData={};vsOrder=[];renderVsLog();document.getElementById("vs-preview").style.display="none";document.getElementById("vs-preview").innerHTML="";}
 function saveAllSession(){
   if(!vsOrder.length){toast("記録がありません","ng");return;}
-  // DOM入力値をvsDataに同期
-  vsOrder.forEach(function(room){
-    var rid=room.replace("号舎","");
-    vsData[room]={
-      normal:parseInt(document.getElementById("vsn-"+rid).value)||0,
-      hibi:parseInt(document.getElementById("vsh-"+rid).value)||0,
-      kigai:parseInt(document.getElementById("vsk-"+rid).value)||0
-    };
-  });
+  // ★ 全号舎を1つのリクエストにまとめて送信（7回→1回で高速化）
   var date=document.getElementById("record-date").value;
   var rec=document.getElementById("vs-recorder").value;
+  var records=vsOrder.map(function(room){
+    var rid=room.replace("号舎","");
+    return {
+      date:date,room:room,
+      normalEggs:parseInt(document.getElementById("vsn-"+rid).value)||0,
+      hibiEggs:parseInt(document.getElementById("vsh-"+rid).value)||0,
+      kigaiEggs:parseInt(document.getElementById("vsk-"+rid).value)||0,
+      feed:"",grass:"",other:"",memo:"[音声入力]",recorder:rec
+    };
+  });
   var sb=document.getElementById("vs-save-all");
-  var rooms=vsOrder.slice();
-  var total=rooms.length;
-  var done=0;
+  var saveCount=records.length;
   sb.disabled=true;
-  sb.textContent="保存中 (0/"+total+")...";
+  sb.textContent="保存中...";
   cacheInvalidate(['getMonthlyDailyRecords','getTodayRecords','getMonthlySummary']);
-  // ★ 1号舎ずつ順番に保存（GAS ScriptLock衝突を防ぐ）
-  function saveNext(i){
-    if(i>=rooms.length){
-      sb.textContent="💾 全て保存する";
-      toast("✅ "+done+"号舎分を保存しました！","ok");
-      clearVsSession();
-      return;
-    }
-    var room=rooms[i];
-    var d=vsData[room];
-    sb.textContent="保存中 ("+(i+1)+"/"+total+")...";
-    callGAS('saveRecord',{date:date,room:room,
-      normalEggs:d.normal,hibiEggs:d.hibi,kigaiEggs:d.kigai,
-      feed:"",grass:"",other:"",memo:"[音声入力]",recorder:rec},'POST')
-    .then(function(){done++;saveNext(i+1);})
-    .catch(function(e){
-      sb.disabled=false;sb.textContent="💾 全て保存する";
-      toast("❌ "+room+"の保存失敗。再度タップしてください","ng");
-    });
-  }
-  saveNext(0);
+  callGAS('saveRecords',{records:records},'POST')
+  .then(function(r){
+    sb.textContent="💾 全て保存する";
+    toast("✅ "+saveCount+"号舎分を保存しました！","ok");
+    clearVsSession();
+  })
+  .catch(function(e){
+    sb.disabled=false;sb.textContent="💾 全て保存する";
+    toast("❌ "+(e.message||"保存エラー"),"ng");
+  });
 }
 
 
@@ -626,6 +702,48 @@ function renderSaleHistory(recs){
     h+='</div>';
   }
   el.innerHTML=h;
+}
+
+
+var _shizaiEditRowIndex=null;
+function openShizaiEditModal(rowIndex,name,qty,unit,price){
+  _shizaiEditRowIndex=rowIndex;
+  document.getElementById("se-name").value=name;
+  document.getElementById("se-qty").value=qty;
+  document.getElementById("se-unit").value=unit;
+  document.getElementById("se-price").value=price;
+  document.getElementById("shizai-edit-title").textContent="📦 "+name+" を編集";
+  document.getElementById("shizai-edit-modal").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function closeShizaiEditModal(e){if(e.target===document.getElementById("shizai-edit-modal"))closeShizaiEditModalBtn();}
+function closeShizaiEditModalBtn(){document.getElementById("shizai-edit-modal").classList.remove("open");document.body.style.overflow="";_shizaiEditRowIndex=null;}
+function doUpdateShizai(){
+  if(!_shizaiEditRowIndex){toast("行番号が取得できません","ng");return;}
+  var btn=document.getElementById("se-save-btn");
+  btn.disabled=true;btn.textContent="保存中...";
+  cacheInvalidate(['getShizaiSummary']);
+  callGAS('updateShizaiRecord',{rowIndex:_shizaiEditRowIndex,name:document.getElementById("se-name").value,qty:document.getElementById("se-qty").value,unit:document.getElementById("se-unit").value,price:document.getElementById("se-price").value},'POST')
+  .then(function(r){
+    btn.disabled=false;btn.textContent="✅ 保存する";
+    toast("✅ "+r.message,"ok");
+    closeShizaiEditModalBtn();
+    loadShizaiHistory();
+  })
+  .catch(function(e){btn.disabled=false;btn.textContent="✅ 保存する";toast("❌ "+(e.message||"エラー"),"ng");});
+}
+function doDeleteShizai(){
+  if(!_shizaiEditRowIndex){toast("行番号が取得できません","ng");return;}
+  var name=document.getElementById("se-name").value;
+  if(!confirm("「"+name+"」を削除しますか？"))return;
+  cacheInvalidate(['getShizaiSummary']);
+  callGAS('deleteShizaiRecord',{rowIndex:_shizaiEditRowIndex},'POST')
+  .then(function(r){
+    toast("🗑 "+r.message,"ok");
+    closeShizaiEditModalBtn();
+    loadShizaiHistory();
+  })
+  .catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});
 }
 
 window.onload=init;
