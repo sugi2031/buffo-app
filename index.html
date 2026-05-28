@@ -561,13 +561,48 @@ function renderVsLog(){var el=document.getElementById("vs-log"),sb=document.getE
 function updateVsTotal(room,rid){var n=parseInt(document.getElementById("vsn-"+rid).value)||0,h=parseInt(document.getElementById("vsh-"+rid).value)||0,k=parseInt(document.getElementById("vsk-"+rid).value)||0;vsData[room]={normal:n,hibi:h,kigai:k};var el=document.getElementById("vst-"+rid);if(el)el.textContent=(n+h+k)+" 個";}
 function deleteVsRecord(room){delete vsData[room];vsOrder=vsOrder.filter(function(r){return r!==room;});renderVsLog();}
 function clearVsSession(){stopVoiceSession();vsData={};vsOrder=[];renderVsLog();document.getElementById("vs-preview").style.display="none";document.getElementById("vs-preview").innerHTML="";}
-function saveAllSession(){if(!vsOrder.length){toast("記録がありません","ng");return;}vsOrder.forEach(function(room){var rid=room.replace("号舎","");vsData[room]={normal:parseInt(document.getElementById("vsn-"+rid).value)||0,hibi:parseInt(document.getElementById("vsh-"+rid).value)||0,kigai:parseInt(document.getElementById("vsk-"+rid).value)||0};});var date=document.getElementById("record-date").value,rec=document.getElementById("vs-recorder").value;var sb=document.getElementById("vs-save-all");var saveCount=vsOrder.length;sb.disabled=true;sb.textContent="保存中...";
-  // ★ 8秒以上かかる場合は案内トーストを表示
-  var slowTimer=setTimeout(function(){toast("⏳ GAS起動中... もう少しお待ちください","");},8000);
+function saveAllSession(){
+  if(!vsOrder.length){toast("記録がありません","ng");return;}
+  // DOM入力値をvsDataに同期
+  vsOrder.forEach(function(room){
+    var rid=room.replace("号舎","");
+    vsData[room]={
+      normal:parseInt(document.getElementById("vsn-"+rid).value)||0,
+      hibi:parseInt(document.getElementById("vsh-"+rid).value)||0,
+      kigai:parseInt(document.getElementById("vsk-"+rid).value)||0
+    };
+  });
+  var date=document.getElementById("record-date").value;
+  var rec=document.getElementById("vs-recorder").value;
+  var sb=document.getElementById("vs-save-all");
+  var rooms=vsOrder.slice();
+  var total=rooms.length;
+  var done=0;
+  sb.disabled=true;
+  sb.textContent="保存中 (0/"+total+")...";
   cacheInvalidate(['getMonthlyDailyRecords','getTodayRecords','getMonthlySummary']);
-  Promise.all(vsOrder.map(function(room){var d=vsData[room];return callGAS('saveRecord',{date:date,room:room,normalEggs:d.normal,hibiEggs:d.hibi,kigaiEggs:d.kigai,feed:"",grass:"",other:"",memo:"[音声入力]",recorder:rec},'POST');}))
-  .then(function(){clearTimeout(slowTimer);sb.textContent="💾 全て保存する";toast("✅ "+saveCount+"号舎分を保存しました！","ok");clearVsSession();})
-  .catch(function(e){clearTimeout(slowTimer);toast("❌ "+(e.message||"保存エラー"),"ng");sb.disabled=false;sb.textContent="💾 全て保存する";});}
+  // ★ 1号舎ずつ順番に保存（GAS ScriptLock衝突を防ぐ）
+  function saveNext(i){
+    if(i>=rooms.length){
+      sb.textContent="💾 全て保存する";
+      toast("✅ "+done+"号舎分を保存しました！","ok");
+      clearVsSession();
+      return;
+    }
+    var room=rooms[i];
+    var d=vsData[room];
+    sb.textContent="保存中 ("+(i+1)+"/"+total+")...";
+    callGAS('saveRecord',{date:date,room:room,
+      normalEggs:d.normal,hibiEggs:d.hibi,kigaiEggs:d.kigai,
+      feed:"",grass:"",other:"",memo:"[音声入力]",recorder:rec},'POST')
+    .then(function(){done++;saveNext(i+1);})
+    .catch(function(e){
+      sb.disabled=false;sb.textContent="💾 全て保存する";
+      toast("❌ "+room+"の保存失敗。再度タップしてください","ng");
+    });
+  }
+  saveNext(0);
+}
 
 
 function loadSaleHistory(){
