@@ -521,7 +521,9 @@ function doResetFlock(){if(!sel){toast("号舎を選んでね","ng");return;}if(
 function calcSzTotal(){var t=0;document.querySelectorAll(".sz-price").forEach(function(el){t+=Number(el.value)||0;});document.getElementById("sz-live-total").textContent="合計 ¥"+t.toLocaleString();}
 function doSaveShizai(){var rows=document.querySelectorAll("#sz-rows .sz-item-wrap"),items=[];for(var i=0;i<rows.length;i++){items.push({name:rows[i].querySelector('[data-sz="name"]').value,qty:rows[i].querySelector('[data-sz="qty"]').value,unit:rows[i].querySelector('[data-sz="unit"]').value,price:rows[i].querySelector('[data-sz="price"]').value});}var pts=document.getElementById("sz-month").value.split("-"),ml=pts[0]+"年"+parseInt(pts[1])+"月";cacheInvalidate(['getShizaiSummary']);callGAS('saveShizaiRecord',{month:ml,items:items,recorder:document.getElementById("sz-recorder").value},'POST').then(function(r){toast("✅ "+r.message,"ok");document.querySelectorAll("#sz-rows .sz-name").forEach(function(e){e.value="";});document.querySelectorAll("#sz-rows .sz-qty").forEach(function(e){e.value="";});document.querySelectorAll("#sz-rows .sz-price").forEach(function(e){e.value="";});calcSzTotal();loadShizaiHistory();}).catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});}
 function loadShizaiHistory(){var cached=cacheGet('getShizaiSummary',{});if(cached){renderShizaiHistory(cached);return;}document.getElementById("shizai-history").innerHTML='<div class="skel"></div>';callGAS('getShizaiSummary').then(renderShizaiHistory).catch(function(){document.getElementById("shizai-history").innerHTML='<div class="em">読み込めませんでした</div>';});}
+var _szMap={};
 function renderShizaiHistory(data){
+  _szMap={};
   var el=document.getElementById("shizai-history");
   if(!data||!data.length){el.innerHTML='<div class="em"><span class="ee">📦</span>まだ記録がないよ</div>';return;}
   var h="";
@@ -530,9 +532,9 @@ function renderShizaiHistory(data){
     h+='<div class="sz-month"><div class="sz-month-h"><span>'+m.month+'</span><span>合計 '+m.total.toLocaleString()+' 円</span></div><div class="sz-month-body">';
     for(var j=0;j<m.items.length;j++){
       var it=m.items[j];
+      _szMap[it.rowIndex]=it;
       var dl=it.recordedDate?'<div style="font-size:10px;color:#5A8A5A;margin-bottom:2px;">📅 '+it.recordedDate+'</div>':'';
-      // ★ タップで編集モーダルを開く
-      h+='<div class="sz-item" style="flex-direction:column;align-items:stretch;padding:10px 0;cursor:pointer;-webkit-tap-highlight-color:rgba(45,106,45,0.15);" onclick="openShizaiEditModal('+it.rowIndex+',''+it.name.replace(/'/g,"\'")+'',' +it.qty+',''+it.unit+'','+it.price+')">'+dl;
+      h+='<div class="sz-item" style="flex-direction:column;align-items:stretch;padding:10px 0;cursor:pointer;" onclick="openShizaiEditModal('+it.rowIndex+')">'+dl;
       h+='<div style="display:flex;justify-content:space-between;align-items:center;">';
       h+='<span>'+it.name+'　'+it.qty+it.unit+'</span>';
       h+='<div style="display:flex;align-items:center;gap:8px;"><span style="color:#2D6A2D;font-weight:700;">'+it.price.toLocaleString()+' 円</span><span style="font-size:18px;color:#C0DCC0;">›</span></div>';
@@ -706,13 +708,15 @@ function renderSaleHistory(recs){
 
 
 var _shizaiEditRowIndex=null;
-function openShizaiEditModal(rowIndex,name,qty,unit,price){
+function openShizaiEditModal(rowIndex){
+  var it=_szMap[rowIndex];
+  if(!it)return;
   _shizaiEditRowIndex=rowIndex;
-  document.getElementById("se-name").value=name;
-  document.getElementById("se-qty").value=qty;
-  document.getElementById("se-unit").value=unit;
-  document.getElementById("se-price").value=price;
-  document.getElementById("shizai-edit-title").textContent="📦 "+name+" を編集";
+  document.getElementById("se-name").value=it.name;
+  document.getElementById("se-qty").value=it.qty;
+  document.getElementById("se-unit").value=it.unit;
+  document.getElementById("se-price").value=it.price;
+  document.getElementById("shizai-edit-title").textContent="📦 "+it.name+" を編集";
   document.getElementById("shizai-edit-modal").classList.add("open");
   document.body.style.overflow="hidden";
 }
