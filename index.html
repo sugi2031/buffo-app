@@ -281,6 +281,7 @@ body{font-family:-apple-system,"Hiragino Maru Gothic Pro",sans-serif;background:
     <div class="fi"><label>記録者</label><input type="text" id="sr" placeholder="お名前"></div>
   </div>
   <button class="btn-save" onclick="doSaveSale()">販売記録を保存</button>
+  <div id="sale-history" style="margin-top:16px;"><div class="skel"></div><div class="skel"></div></div>
 </div>
 <div id="pg-summary" class="pg">
   <div class="sub-tb">
@@ -319,7 +320,8 @@ var CACHE_TTL={
   'getMonthlyDailyByYearMonth':120000, // 2分
   'getDayDetail':60000,
   'getWeatherForecast':300000,     // 5分
-  'getFlockInfo':30000
+  'getFlockInfo':30000,
+  'getSaleRecords':30000
 };
 function cacheKey(action,params){return action+'|'+JSON.stringify(params||{});}
 function cacheGet(action,params){
@@ -378,16 +380,17 @@ function init(){
   buildGrid();buildSzRows();setSzThisMonth();
   var d=new Date();
   document.getElementById("today-label").textContent=d.getFullYear()+"年"+(d.getMonth()+1)+"月の日別産卵記録";
-  // ★ ウォームアップ → 天気取得 → バックグラウンドでデータ先読み
+  // ★ 全データを起動直後に並列取得（遅延なし）
   warmGAS();
   loadWeather();
-  // バックグラウンドで当月データを先読み（タブ切替を速くする）
-  setTimeout(function(){
-    callGAS('getMonthlyDailyRecords').catch(function(){});
-    callGAS('getMonthlySaleTotal').catch(function(){});
-    callGAS('getTodayRecords').catch(function(){});
-  },2000);
-  checkAndShowMilestoneBanner();
+  Promise.all([
+    callGAS("getMonthlyDailyRecords").catch(function(){}),
+    callGAS("getTodayRecords").catch(function(){}),
+    callGAS("getMonthlySaleTotal").catch(function(){}),
+    callGAS("getMonthlySummary").catch(function(){}),
+    callGAS("getShizaiSummary").catch(function(){})
+  ]).then(function(){ checkAndShowMilestoneBanner(); });
+  callGAS("getTodayRecords").then(updateBadges).catch(function(){});
 }
 
 function buildSzRows(){var c=document.getElementById("sz-rows"),h="";for(var i=0;i<2;i++){if(i>0)h+='<div style="height:1px;background:#EAF5EA;margin:8px 0;"></div>';h+='<div class="sz-item-wrap"><div style="margin-bottom:5px;"><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">資材名</div><input class="sz-name" type="text" placeholder="例：配合飼料" data-sz="name"></div><div style="display:flex;gap:6px;align-items:flex-end;"><div style="flex:1;"><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">数量</div><input class="sz-qty" type="number" placeholder="0" inputmode="numeric" data-sz="qty"></div><div><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">単位</div><select class="sz-unit" data-sz="unit"><option>kg</option><option>g</option><option>袋</option><option>個</option><option>L</option><option>本</option><option>箱</option><option>枚</option><option>その他</option></select></div><div style="flex:1.5;"><div style="font-size:10px;color:#5A8A5A;font-weight:700;margin-bottom:3px;">金額（円）</div><input class="sz-price" type="number" oninput="calcSzTotal()" placeholder="¥0" inputmode="numeric" data-sz="price"></div></div></div>';}c.innerHTML=h;}
@@ -449,7 +452,7 @@ function doSaveSale(){
   toast("📤 保存中...","");
   cacheInvalidate(['getMonthlySaleTotal']);
   callGAS('saveSaleRecord',params,'POST')
-  .then(function(r){toast("✅ "+r.message,"ok");loadSaleBanner();})
+  .then(function(r){toast("✅ "+r.message,"ok");loadSaleBanner();cacheInvalidate(['getSaleRecords']);loadSaleHistory();})
   .catch(function(e){toast("❌ "+(e.message||"エラー"),"ng");});
 }
 
@@ -476,7 +479,7 @@ function sw(tab){
   var tabs=["record","today","sale","summary"],btns=document.querySelectorAll(".tab");
   for(var i=0;i<tabs.length;i++){btns[i].className="tab"+(tabs[i]===tab?" on":"");document.getElementById("pg-"+tabs[i]).className="pg"+(tabs[i]===tab?" on":"");}
   if(tab==="today")loadToday();
-  if(tab==="sale")loadSaleBanner();
+  if(tab==="sale"){loadSaleBanner();loadSaleHistory();}
   if(tab==="summary"){loadSummary();loadShizaiHistory();}
   if(tab!=="record")stopVoiceSession();
 }
@@ -558,12 +561,37 @@ function renderVsLog(){var el=document.getElementById("vs-log"),sb=document.getE
 function updateVsTotal(room,rid){var n=parseInt(document.getElementById("vsn-"+rid).value)||0,h=parseInt(document.getElementById("vsh-"+rid).value)||0,k=parseInt(document.getElementById("vsk-"+rid).value)||0;vsData[room]={normal:n,hibi:h,kigai:k};var el=document.getElementById("vst-"+rid);if(el)el.textContent=(n+h+k)+" 個";}
 function deleteVsRecord(room){delete vsData[room];vsOrder=vsOrder.filter(function(r){return r!==room;});renderVsLog();}
 function clearVsSession(){stopVoiceSession();vsData={};vsOrder=[];renderVsLog();document.getElementById("vs-preview").style.display="none";document.getElementById("vs-preview").innerHTML="";}
-function saveAllSession(){if(!vsOrder.length){toast("記録がありません","ng");return;}vsOrder.forEach(function(room){var rid=room.replace("号舎","");vsData[room]={normal:parseInt(document.getElementById("vsn-"+rid).value)||0,hibi:parseInt(document.getElementById("vsh-"+rid).value)||0,kigai:parseInt(document.getElementById("vsk-"+rid).value)||0};});var date=document.getElementById("record-date").value,rec=document.getElementById("vs-recorder").value;var sb=document.getElementById("vs-save-all");sb.disabled=true;sb.textContent="保存中...";
-  // ★ キャッシュ無効化してから一括保存
+function saveAllSession(){if(!vsOrder.length){toast("記録がありません","ng");return;}vsOrder.forEach(function(room){var rid=room.replace("号舎","");vsData[room]={normal:parseInt(document.getElementById("vsn-"+rid).value)||0,hibi:parseInt(document.getElementById("vsh-"+rid).value)||0,kigai:parseInt(document.getElementById("vsk-"+rid).value)||0};});var date=document.getElementById("record-date").value,rec=document.getElementById("vs-recorder").value;var sb=document.getElementById("vs-save-all");var saveCount=vsOrder.length;sb.disabled=true;sb.textContent="保存中...";
+  // ★ 8秒以上かかる場合は案内トーストを表示
+  var slowTimer=setTimeout(function(){toast("⏳ GAS起動中... もう少しお待ちください","");},8000);
   cacheInvalidate(['getMonthlyDailyRecords','getTodayRecords','getMonthlySummary']);
   Promise.all(vsOrder.map(function(room){var d=vsData[room];return callGAS('saveRecord',{date:date,room:room,normalEggs:d.normal,hibiEggs:d.hibi,kigaiEggs:d.kigai,feed:"",grass:"",other:"",memo:"[音声入力]",recorder:rec},'POST');}))
-  .then(function(){toast("✅ "+vsOrder.length+"号舎分を保存しました","ok");clearVsSession();})
-  .catch(function(e){toast("❌ "+(e.message||"保存エラー"),"ng");sb.disabled=false;sb.textContent="💾 全て保存する";});}
+  .then(function(){clearTimeout(slowTimer);sb.textContent="💾 全て保存する";toast("✅ "+saveCount+"号舎分を保存しました！","ok");clearVsSession();})
+  .catch(function(e){clearTimeout(slowTimer);toast("❌ "+(e.message||"保存エラー"),"ng");sb.disabled=false;sb.textContent="💾 全て保存する";});}
+
+
+function loadSaleHistory(){
+  var cached=cacheGet('getSaleRecords',{});
+  if(cached){renderSaleHistory(cached);return;}
+  document.getElementById("sale-history").innerHTML='<div class="skel"></div><div class="skel"></div>';
+  callGAS('getSaleRecords').then(renderSaleHistory).catch(function(){document.getElementById("sale-history").innerHTML='<div class="em">読み込めませんでした</div>';});
+}
+function renderSaleHistory(recs){
+  var el=document.getElementById("sale-history");
+  if(!recs||!recs.length){el.innerHTML='<div class="em" style="padding:24px 0;"><span style="font-size:36px;display:block;margin-bottom:8px;">🛒</span>今月の販売記録はまだないよ</div>';return;}
+  var h='<div style="font-size:13px;font-weight:800;color:#2D6A2D;margin-bottom:10px;">📋 今月の販売記録</div>';
+  for(var i=0;i<recs.length;i++){
+    var r=recs[i];
+    h+='<div style="background:#fff;border:1.5px solid #C0DCC0;border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">';
+    h+='<div><div style="font-size:14px;font-weight:800;color:#2D6A2D;">'+r.date+(r.buyer?' · '+r.buyer:'')+'</div>';
+    h+='<div style="font-size:11px;color:#5A8A5A;margin-top:3px;">'+r.qty+'個 × '+r.price.toLocaleString()+'円'+(r.channel?' · '+r.channel:'')+'</div>';
+    if(r.memo)h+='<div style="font-size:11px;color:#A0C0A0;margin-top:2px;">'+r.memo+'</div>';
+    h+='</div>';
+    h+='<div style="text-align:right;flex-shrink:0;margin-left:8px;"><div style="font-size:22px;font-weight:800;color:#2D6A2D;">'+r.total.toLocaleString()+'</div><div style="font-size:11px;color:#5A8A5A;">円</div></div>';
+    h+='</div>';
+  }
+  el.innerHTML=h;
+}
 
 window.onload=init;
 </script>
